@@ -1,0 +1,6 @@
+Revision history for Perl extension RDF::Query::Client.
+
+0.01  Tue Nov 10 11:00:49 2009
+	- original version; created by h2xs 1.23 with options
+		-X RDF::Query::Client
+

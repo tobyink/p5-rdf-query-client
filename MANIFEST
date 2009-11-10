@@ -1,0 +1,6 @@
+Changes
+Makefile.PL
+MANIFEST
+README
+t/RDF-Query-Client.t
+lib/RDF/Query/Client.pm
