@@ -1,6 +1,6 @@
 package RDF::Query::Client;
 
-use 5.010000;
+use 5.006_001;
 use strict;
 use warnings;
 
@@ -8,7 +8,7 @@ use LWP::UserAgent;
 use RDF::Trine;
 use URI::Escape;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 =head1 NAME
 
@@ -16,7 +16,7 @@ RDF::Query::Client - Client for W3C SPARQL Protocol 1.0
 
 =head1 VERSION
 
-0.01
+0.02
 
 =head1 SYNOPSIS
 
@@ -70,7 +70,10 @@ Options include:
     * UserAgent - an LWP::UserAgent to handle HTTP requests.
     * QueryMethod - 'GET', 'POST' or undef (automatic).
     * QueryParameter - defaults to 'query'.
+    * AuthUsername - HTTP Basic authorization.
+    * AuthPassword - HTTP Basic authorization.
     * Headers - additional headers to include (hashref).
+    * Parameters - additional GET/POST fields to include (hashref).
 
 Returns undef on error; an RDF::Trine::Iterator if called in a
 scalar context; an array obtained by calling C<get_all> on the
@@ -108,6 +111,36 @@ sub execute
 	{
 		return $iterator;
 	}
+}
+
+=item C<< get ( $endpoint, \%opts ) >>
+
+Executes the query using the specified endpoint, and returns the first matching row
+as a LIST of values. Takes the same arguments as C<< execute() >>.
+
+=cut
+
+sub get
+{
+	my $iterator = execute(@_);
+	
+	if ($iterator->is_bindings)
+	{
+		$iterator->next;
+		return $iterator->binding_values;
+	}
+	if ($iterator->is_boolean)
+	{
+		my @rv;
+		push @rv, 1 if $iterator->get_boolean;
+		return @rv;
+	}
+	if ($iterator->is_graph)
+	{
+		my $statement = $iterator->next;
+		return ($statement->subject, $statement->predicate, $statement->object);
+	}
+	return undef;
 }
 
 =item C<< as_sparql () >>
@@ -157,8 +190,6 @@ sub error
 	my $self = shift;
 	return $self->{'error'};
 }
-
-=item C<< get () >>
 
 =item C<< prepare () >>
 
@@ -256,7 +287,7 @@ sub _prepare_request
 	my $method = uc $opts->{QueryMethod};
 	if ($method !~ /^(get|post)$/i)
 	{
-		$method = (length $self->{'query'} > 800) ? 'POST' : 'GET';
+		$method = (length $self->{'query'} > 600) ? 'POST' : 'GET';
 	}
 	
 	my $param = $opts->{QueryParameter} || 'query';
@@ -266,20 +297,49 @@ sub _prepare_request
 	if ($method eq 'GET')
 	{
 		$uri  = $endpoint . ($endpoint =~ /\?/ ? '&' : '?');
-		$uri .= uri_escape($param);
-		$uri .= "=";
-		$uri .= uri_escape($self->{'query'});
+		$uri .= sprintf(
+			"%s=%s",
+			uri_escape($param),
+			uri_escape($self->{'query'})
+			);
+		if ($opts->{Parameters})
+		{
+			foreach my $field (keys %{$opts->{Parameters}})
+			{
+				$uri .= sprintf(
+					"&%s=%s",
+					uri_escape($field),
+					uri_escape($opts->{Parameters}->{$field}),
+					);
+			}
+		}
 	}
 	elsif ($method eq 'POST')
 	{
 		$uri  = $endpoint;
-		$cnt  = uri_escape($param);
-		$cnt .= "=";
-		$cnt .= uri_escape($self->{'query'});
+		$cnt  = sprintf(
+			"%s=%s",
+			uri_escape($param),
+			uri_escape($self->{'query'})
+			);
+		if ($opts->{Parameters})
+		{
+			foreach my $field (keys %{$opts->{Parameters}})
+			{
+				$cnt .= sprintf(
+					"&%s=%s",
+					uri_escape($field),
+					uri_escape($opts->{Parameters}->{$field}),
+					);
+			}
+		}
 	}
 	
 	my $req = HTTP::Request->new($method, $uri);
+	$req->content_type('application/x-www-form-urlencoded');
 	$req->content($cnt);
+	$req->authorization_basic($opts->{AuthUsername}, $opts->{AuthPassword})
+		if defined $opts->{AuthUsername};
 	foreach my $k (keys %{$opts->{Headers}})
 	{
 		$req->header($k => $opts->{Headers}->{$k});
@@ -337,7 +397,7 @@ sub _create_iterator
 
 =item * L<RDF::Trine>
 
-=item * L<RDF::Query>
+=item * L<LWP::UserAgent>
 
 =item * http://www.w3.org/TR/rdf-sparql-protocol/
 
