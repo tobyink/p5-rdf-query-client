@@ -4,3 +4,8 @@ Revision history for Perl extension RDF::Query::Client.
 	- original version; created by h2xs 1.23 with options
 		-X RDF::Query::Client
 
+0.02  Thu Nov 12 13:07:44 GMT 2009
+	- Add support for HTTP Basic Auth
+	- Add security notes to documentation
+	- Implement $query->get() method
+	- Fix compatibility with Perl 5.6 and 5.8

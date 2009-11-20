@@ -11,7 +11,7 @@ my $sparql_ask
 
 my $sparql_select
 	= "PREFIX dc: <http://purl.org/dc/elements/1.1/>\n"
-	. "SELECT * WHERE { ?book dc:title ?title . }" ;
+	. "SELECT * WHERE { ?book dc:title ?title . } ORDER BY ?book" ;
 
 my $sparql_construct
 	= "PREFIX dc: <http://purl.org/dc/elements/1.1/>\n"
@@ -50,4 +50,9 @@ while ($row = $r_construct->next)
 {
 	say $row->as_string;
 }
+say "====";
+
+say "Testing get()";
+my @list = $q_select->get('http://sparql.org/books');
+print Dumper(\@list);
 say "====";

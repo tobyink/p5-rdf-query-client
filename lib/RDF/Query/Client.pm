@@ -1,6 +1,6 @@
 package RDF::Query::Client;
 
-use 5.006_001;
+use 5.006;
 use strict;
 use warnings;
 
@@ -122,24 +122,28 @@ as a LIST of values. Takes the same arguments as C<< execute() >>.
 
 sub get
 {
-	my $iterator = execute(@_);
+	my $stream = execute( @_ );
 	
-	if ($iterator->is_bindings)
+	if (ref $stream)
 	{
-		$iterator->next;
-		return $iterator->binding_values;
+		if ($stream->is_bindings)
+		{
+			my $row = $stream->next;
+			return $stream->binding_values;
+		}
+		if ($stream->is_graph)
+		{
+			my $st = $stream->next;
+			return ($st->subject, $st->predicate, $st->object);
+		}
+		if ($stream->is_boolean)
+		{
+			my @rv;
+			push @rv, 1 if $stream->get_boolean;
+			return @rv;
+		}
 	}
-	if ($iterator->is_boolean)
-	{
-		my @rv;
-		push @rv, 1 if $iterator->get_boolean;
-		return @rv;
-	}
-	if ($iterator->is_graph)
-	{
-		my $statement = $iterator->next;
-		return ($statement->subject, $statement->predicate, $statement->object);
-	}
+	
 	return undef;
 }
 
@@ -236,7 +240,6 @@ for compatibility with RDF::Query.
 
 =cut
 
-sub get { }
 sub prepare { }
 sub execute_plan { }
 sub execute_with_named_graphs { }
@@ -389,17 +392,35 @@ sub _create_iterator
 
 =back
 
+=head1 SECURITY
+
+The C<<execute()>> and C<<get()>> methods allow AuthUsername and
+AuthPassword options to be passed to them for HTTP Basic authentication.
+For more complicated Authentication (Digest, OAuth, Windows, etc),
+it is also possible to pass these methods a customised LWP::UserAgent.
+
+If you have the Crypt::SSLeay package installed, requests to HTTPS
+endpoints should work. It's possible to specify a client X.509
+certificate (e.g. for FOAF+SSL authentication) by setting particular
+environment variables. See L<Crypt::SSLeay> documentation for details.
+
+=head1 BUGS
+
+Probably.
+
 =head1 SEE ALSO
 
 =over 4
 
-=item * L<RDF::Query>
+=item * L<RDF::Trine>, L<RDF::Trine::Iterator>
 
-=item * L<RDF::Trine>
+=item * L<RDF::Query>
 
 =item * L<LWP::UserAgent>
 
 =item * http://www.w3.org/TR/rdf-sparql-protocol/
+
+=item * http://www.w3.org/TR/rdf-sparql-query/
 
 =item * http://www.perlrdf.org/
 

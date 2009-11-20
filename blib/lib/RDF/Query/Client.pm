@@ -1,6 +1,6 @@
 package RDF::Query::Client;
 
-use 5.010000;
+use 5.006;
 use strict;
 use warnings;
 
@@ -8,7 +8,7 @@ use LWP::UserAgent;
 use RDF::Trine;
 use URI::Escape;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 =head1 NAME
 
@@ -16,7 +16,7 @@ RDF::Query::Client - Client for W3C SPARQL Protocol 1.0
 
 =head1 VERSION
 
-0.01
+0.02
 
 =head1 SYNOPSIS
 
@@ -70,7 +70,10 @@ Options include:
     * UserAgent - an LWP::UserAgent to handle HTTP requests.
     * QueryMethod - 'GET', 'POST' or undef (automatic).
     * QueryParameter - defaults to 'query'.
+    * AuthUsername - HTTP Basic authorization.
+    * AuthPassword - HTTP Basic authorization.
     * Headers - additional headers to include (hashref).
+    * Parameters - additional GET/POST fields to include (hashref).
 
 Returns undef on error; an RDF::Trine::Iterator if called in a
 scalar context; an array obtained by calling C<get_all> on the
@@ -108,6 +111,40 @@ sub execute
 	{
 		return $iterator;
 	}
+}
+
+=item C<< get ( $endpoint, \%opts ) >>
+
+Executes the query using the specified endpoint, and returns the first matching row
+as a LIST of values. Takes the same arguments as C<< execute() >>.
+
+=cut
+
+sub get
+{
+	my $stream = execute( @_ );
+	
+	if (ref $stream)
+	{
+		if ($stream->is_bindings)
+		{
+			my $row = $stream->next;
+			return $stream->binding_values;
+		}
+		if ($stream->is_graph)
+		{
+			my $st = $stream->next;
+			return ($st->subject, $st->predicate, $st->object);
+		}
+		if ($stream->is_boolean)
+		{
+			my @rv;
+			push @rv, 1 if $stream->get_boolean;
+			return @rv;
+		}
+	}
+	
+	return undef;
 }
 
 =item C<< as_sparql () >>
@@ -158,8 +195,6 @@ sub error
 	return $self->{'error'};
 }
 
-=item C<< get () >>
-
 =item C<< prepare () >>
 
 =item C<< execute_plan () >>
@@ -205,7 +240,6 @@ for compatibility with RDF::Query.
 
 =cut
 
-sub get { }
 sub prepare { }
 sub execute_plan { }
 sub execute_with_named_graphs { }
@@ -256,7 +290,7 @@ sub _prepare_request
 	my $method = uc $opts->{QueryMethod};
 	if ($method !~ /^(get|post)$/i)
 	{
-		$method = (length $self->{'query'} > 800) ? 'POST' : 'GET';
+		$method = (length $self->{'query'} > 600) ? 'POST' : 'GET';
 	}
 	
 	my $param = $opts->{QueryParameter} || 'query';
@@ -266,20 +300,49 @@ sub _prepare_request
 	if ($method eq 'GET')
 	{
 		$uri  = $endpoint . ($endpoint =~ /\?/ ? '&' : '?');
-		$uri .= uri_escape($param);
-		$uri .= "=";
-		$uri .= uri_escape($self->{'query'});
+		$uri .= sprintf(
+			"%s=%s",
+			uri_escape($param),
+			uri_escape($self->{'query'})
+			);
+		if ($opts->{Parameters})
+		{
+			foreach my $field (keys %{$opts->{Parameters}})
+			{
+				$uri .= sprintf(
+					"&%s=%s",
+					uri_escape($field),
+					uri_escape($opts->{Parameters}->{$field}),
+					);
+			}
+		}
 	}
 	elsif ($method eq 'POST')
 	{
 		$uri  = $endpoint;
-		$cnt  = uri_escape($param);
-		$cnt .= "=";
-		$cnt .= uri_escape($self->{'query'});
+		$cnt  = sprintf(
+			"%s=%s",
+			uri_escape($param),
+			uri_escape($self->{'query'})
+			);
+		if ($opts->{Parameters})
+		{
+			foreach my $field (keys %{$opts->{Parameters}})
+			{
+				$cnt .= sprintf(
+					"&%s=%s",
+					uri_escape($field),
+					uri_escape($opts->{Parameters}->{$field}),
+					);
+			}
+		}
 	}
 	
 	my $req = HTTP::Request->new($method, $uri);
+	$req->content_type('application/x-www-form-urlencoded');
 	$req->content($cnt);
+	$req->authorization_basic($opts->{AuthUsername}, $opts->{AuthPassword})
+		if defined $opts->{AuthUsername};
 	foreach my $k (keys %{$opts->{Headers}})
 	{
 		$req->header($k => $opts->{Headers}->{$k});
@@ -329,17 +392,35 @@ sub _create_iterator
 
 =back
 
+=head1 SECURITY
+
+The C<<execute()>> and C<<get()>> methods allow AuthUsername and
+AuthPassword options to be passed to them for HTTP Basic authentication.
+For more complicated Authentication (Digest, OAuth, Windows, etc),
+it is also possible to pass these methods a customised LWP::UserAgent.
+
+If you have the Crypt::SSLeay package installed, requests to HTTPS
+endpoints should work. It's possible to specify a client X.509
+certificate (e.g. for FOAF+SSL authentication) by setting particular
+environment variables. See L<Crypt::SSLeay> documentation for details.
+
+=head1 BUGS
+
+Probably.
+
 =head1 SEE ALSO
 
 =over 4
 
-=item * L<RDF::Query>
-
-=item * L<RDF::Trine>
+=item * L<RDF::Trine>, L<RDF::Trine::Iterator>
 
 =item * L<RDF::Query>
+
+=item * L<LWP::UserAgent>
 
 =item * http://www.w3.org/TR/rdf-sparql-protocol/
+
+=item * http://www.w3.org/TR/rdf-sparql-query/
 
 =item * http://www.perlrdf.org/
 
