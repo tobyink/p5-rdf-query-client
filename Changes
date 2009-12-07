@@ -9,3 +9,8 @@ Revision history for Perl extension RDF::Query::Client.
 	- Add security notes to documentation
 	- Implement $query->get() method
 	- Fix compatibility with Perl 5.6 and 5.8
+
+0.03  Mon Dec  7 11:32:56 GMT 2009
+	- Fix Makefile.PL compatibility with Perl 5.6 and 5.8
+	- Remove documentation of RDF::Query-compatible stubs
+	- Issue warnings for calling RDF::Query-compatible stubs

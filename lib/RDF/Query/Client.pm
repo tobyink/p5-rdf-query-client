@@ -9,15 +9,15 @@ use LWP::UserAgent;
 use RDF::Trine;
 use URI::Escape;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 =head1 NAME
 
-RDF::Query::Client - Client for W3C SPARQL Protocol 1.0
+RDF::Query::Client - Get data from W3C SPARQL Protocol 1.0 servers
 
 =head1 VERSION
 
-0.02
+0.03
 
 =head1 SYNOPSIS
 
@@ -384,14 +384,14 @@ Probably.
 
 =head1 AUTHOR
 
-Toby Inkster, E<lt>mail@tobyinkster.co.ukE<gt>
+Toby Inkster, E<lt>tobyink@cpan.orgE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
 Copyright (C) 2009 by Toby Inkster
 
 This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself, either Perl version 5.10.0 or,
+it under the same terms as Perl itself, either Perl version 5.6.0 or,
 at your option, any later version of Perl 5 you may have available.
 
 =cut
