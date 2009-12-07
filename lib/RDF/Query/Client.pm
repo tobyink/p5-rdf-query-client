@@ -4,6 +4,7 @@ use 5.006;
 use strict;
 use warnings;
 
+use Carp;
 use LWP::UserAgent;
 use RDF::Trine;
 use URI::Escape;
@@ -195,71 +196,26 @@ sub error
 	return $self->{'error'};
 }
 
-=item C<< prepare () >>
-
-=item C<< execute_plan () >>
-
-=item C<< execute_with_named_graphs () >>
-
-=item C<< aggregate () >>
-
-=item C<< pattern () >>
-
-=item C<< sse () >>
-
-=item C<< algebra_fixup () >>
-
-=item C<< add_function () >>
-
-=item C<< supported_extensions () >>
-
-=item C<< supported_functions () >>
-
-=item C<< add_computed_statement_generator () >>
-
-=item C<< get_computed_statement_generators () >>
-
-=item C<< net_filter_function () >>
-
-=item C<< add_hook_once () >>
-
-=item C<< add_hook () >>
-
-=item C<< parsed () >>
-
-=item C<< bridge () >>
-
-=item C<< log () >>
-
-=item C<< logger () >>
-
-=item C<< costmodel () >>
-
-Each of these currently returns undef. They are placeholders
-for compatibility with RDF::Query.
-
-=cut
-
-sub prepare { }
-sub execute_plan { }
-sub execute_with_named_graphs { }
-sub aggregate { }
-sub pattern { }
-sub sse { }
-sub algebra_fixup { }
-sub add_function { }
-sub supported_extensions { }
-sub supported_functions { }
-sub add_computed_statement_generator { }
-sub get_computed_statement_generators { }
-sub net_filter_function { }
-sub add_hook_once { }
-sub add_hook { }
-sub parsed { }
-sub bridge { }
-sub log { }
-sub logger { }
-sub costmodel { }
+sub prepare { carp "Method not implemented\n"; }
+sub execute_plan { carp "Method not implemented\n"; }
+sub execute_with_named_graphs { carp "Method not implemented\n"; }
+sub aggregate { carp "Method not implemented\n"; }
+sub pattern { carp "Method not implemented\n"; }
+sub sse { carp "Method not implemented\n"; }
+sub algebra_fixup { carp "Method not implemented\n"; }
+sub add_function { carp "Method not implemented\n"; }
+sub supported_extensions { carp "Method not implemented\n"; }
+sub supported_functions { carp "Method not implemented\n"; }
+sub add_computed_statement_generator { carp "Method not implemented\n"; }
+sub get_computed_statement_generators { carp "Method not implemented\n"; }
+sub net_filter_function { carp "Method not implemented\n"; }
+sub add_hook_once { carp "Method not implemented\n"; }
+sub add_hook { carp "Method not implemented\n"; }
+sub parsed { carp "Method not implemented\n"; }
+sub bridge { carp "Method not implemented\n"; }
+sub log { carp "Method not implemented\n"; }
+sub logger { carp "Method not implemented\n"; }
+sub costmodel { carp "Method not implemented\n"; }
 
 sub _prepare_ua
 {
