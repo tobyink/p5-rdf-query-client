@@ -19,6 +19,7 @@ no_index:
     - inc
     - t
 requires:
+  Carp: 0
   LWP::UserAgent: 0
   RDF::Trine: 0.111
   URI::Escape: 0
@@ -28,4 +29,4 @@ resources:
   homepage: http://search.cpan.org/dist/RDF-Query-Client/
   license: http://dev.perl.org/licenses/
   repository: http://goddamn.co.uk/viewvc/perlmods/RDF-Query-Client/
-version: 0.03
+version: 0.04

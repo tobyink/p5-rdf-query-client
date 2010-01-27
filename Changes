@@ -20,8 +20,8 @@ Maintainer:   Toby Inkster <mailto:tobyink@cpan.org>
 
 0.02 [2009-11-12]
  - Add security notes to documentation
- - (Addition) Support for HTTP Basic Auth
  - lib/RDF/Query/Client.pm: use 5.006
+ - (Addition) Support for HTTP Basic Auth
  - (Addition) Implement get() method
 
 0.01 [2009-11-10]
