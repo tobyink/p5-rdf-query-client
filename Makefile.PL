@@ -16,6 +16,7 @@ license             'perl';
 
 test_requires       'Test::More' => '0.61';
 
+requires            'Carp'           => 0;
 requires            'RDF::Trine'     => 0.111;
 requires            'LWP::UserAgent' => 0;
 requires            'URI::Escape'    => 0;

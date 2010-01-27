@@ -9,7 +9,7 @@ use LWP::UserAgent;
 use RDF::Trine;
 use URI::Escape;
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 =head1 NAME
 
@@ -17,7 +17,7 @@ RDF::Query::Client - Get data from W3C SPARQL Protocol 1.0 servers
 
 =head1 VERSION
 
-0.03
+0.04
 
 =head1 SYNOPSIS
 
