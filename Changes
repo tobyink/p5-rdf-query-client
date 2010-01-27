@@ -1,16 +1,28 @@
-Revision history for Perl extension RDF::Query::Client.
+############################################################################
+## Changes #################################################################
+############################################################################
 
-0.01  Tue Nov 10 11:00:49 2009
-	- original version; created by h2xs 1.23 with options
-		-X RDF::Query::Client
+RDF-Query-Client
+================
 
-0.02  Thu Nov 12 13:07:44 GMT 2009
-	- Add support for HTTP Basic Auth
-	- Add security notes to documentation
-	- Implement $query->get() method
-	- Fix compatibility with Perl 5.6 and 5.8
+Created:      2009-11-10
+Home page:    <http://search.cpan.org/dist/RDF-Query-Client/>
+Bug tracker:  <http://rt.cpan.org/Dist/Display.html?Queue=RDF-Query-Client>
+Maintainer:   Toby Inkster <mailto:tobyink@cpan.org>
 
-0.03  Mon Dec  7 11:32:56 GMT 2009
-	- Fix Makefile.PL compatibility with Perl 5.6 and 5.8
-	- Remove documentation of RDF::Query-compatible stubs
-	- Issue warnings for calling RDF::Query-compatible stubs
+0.04 [2010-01-27]
+ - (Update) Use my new build system.
+
+0.03 [2009-12-07]
+ - Remove documentation for RDF::Query-compatible stub functions; issue
+   warnings when they're called.
+ - Makefile.PL compatibility with earlier Perl versions.
+
+0.02 [2009-11-12]
+ - Add security notes to documentation
+ - (Addition) Support for HTTP Basic Auth
+ - lib/RDF/Query/Client.pm: use 5.006
+ - (Addition) Implement get() method
+
+0.01 [2009-11-10]
+

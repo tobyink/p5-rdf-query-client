@@ -15,8 +15,8 @@ SYNOPSIS
 
 METHODS
     "new ( $query, \%opts )"
-        Returns a new RDF::Query::Client object for the specified $query. The
-        object's interface is designed to be roughly compatible with
+        Returns a new RDF::Query::Client object for the specified $query.
+        The object's interface is designed to be roughly compatible with
         RDF::Query objects. The query language is always 'sparql'.
 
         Options include:
@@ -24,8 +24,8 @@ METHODS
             * UserAgent - an LWP::UserAgent to handle HTTP requests.
 
     "execute ( $endpoint, \%opts )"
-        $endpoint is a URI object or string containing the endpoint URI to be
-        queried.
+        $endpoint is a URI object or string containing the endpoint URI to
+        be queried.
 
         Options include:
 
@@ -37,13 +37,13 @@ METHODS
             * Headers - additional headers to include (hashref).
             * Parameters - additional GET/POST fields to include (hashref).
 
-        Returns undef on error; an RDF::Trine::Iterator if called in a scalar
-        context; an array obtained by calling "get_all" on the iterator if
-        called in list context.
+        Returns undef on error; an RDF::Trine::Iterator if called in a
+        scalar context; an array obtained by calling "get_all" on the
+        iterator if called in list context.
 
     "get ( $endpoint, \%opts )"
-        Executes the query using the specified endpoint, and returns the first
-        matching row as a LIST of values. Takes the same arguments as
+        Executes the query using the specified endpoint, and returns the
+        first matching row as a LIST of values. Takes the same arguments as
         "execute()".
 
     "as_sparql ()"
@@ -65,9 +65,9 @@ SECURITY
     also possible to pass these methods a customised LWP::UserAgent.
 
     If you have the Crypt::SSLeay package installed, requests to HTTPS
-    endpoints should work. It's possible to specify a client X.509 certificate
-    (e.g. for FOAF+SSL authentication) by setting particular environment
-    variables. See Crypt::SSLeay documentation for details.
+    endpoints should work. It's possible to specify a client X.509
+    certificate (e.g. for FOAF+SSL authentication) by setting particular
+    environment variables. See Crypt::SSLeay documentation for details.
 
 BUGS
     Probably.
@@ -92,6 +92,6 @@ COPYRIGHT AND LICENSE
     Copyright (C) 2009 by Toby Inkster
 
     This library is free software; you can redistribute it and/or modify it
-    under the same terms as Perl itself, either Perl version 5.6.0 or, at your
-    option, any later version of Perl 5 you may have available.
+    under the same terms as Perl itself, either Perl version 5.6.0 or, at
+    your option, any later version of Perl 5 you may have available.
 
