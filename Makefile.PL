@@ -3,13 +3,16 @@ use warnings;
 
 use inc::Module::Install;
 
-license             'perl';
+my $dist = 'RDF-Query-Client';
+my $fn   = "lib/$dist.pm"; $fn =~ s#-#/#g;
 
-name                'RDF-Query-Client';
+name                $dist;
+perl_version_from   $fn;
+version_from        $fn;
+abstract_from       $fn;
+readme_from         $fn;
 author              'Toby Inkster <tobyink@cpan.org>';
-perl_version_from   'lib/RDF/Query/Client.pm';
-version_from        'lib/RDF/Query/Client.pm';
-abstract_from       'lib/RDF/Query/Client.pm';
+license             'perl';
 
 test_requires       'Test::More' => '0.61';
 
@@ -17,12 +20,18 @@ requires            'RDF::Trine'     => 0.111;
 requires            'LWP::UserAgent' => 0;
 requires            'URI::Escape'    => 0;
 
+resources(
+	'homepage'   => "http://search.cpan.org/dist/$dist/",
+	'repository' => "http://goddamn.co.uk/viewvc/perlmods/$dist/",
+	'bugtracker' => "http://rt.cpan.org/Dist/Display.html?Queue=$dist",
+	);
+	
+write_doap_changes;
+write_doap_changes_xml;
+
+include 'Test::Signature';
 auto_install;
-
-sign;
-
-WriteAll;
-
-use Pod::Text;
-my $parser = Pod::Text->new (sentence => 0, width => 78);
-$parser->parse_from_file('lib/RDF/Query/Client.pm', 'README');
+WriteAll(
+	'meta' => 1,
+	'sign' => 1,
+	);
