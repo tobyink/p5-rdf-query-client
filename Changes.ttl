@@ -25,7 +25,7 @@ my:v_0_01
 	a               :Version ;
 	dc:issued       "2009-11-10"^^xsd:date ;
 	:revision       "0.01"^^xsd:string ;
-	:file-release   <http://backpan.perl.org/authors/id/T/TO/TOBYINK/RDF-Query-Client-0.01.tar.gz> ;
+	:file-release   <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-Query-Client-0.01.tar.gz> ;
 	rdfs:comment    "Original version"@en .
 
 my:v_0_02
@@ -33,7 +33,7 @@ my:v_0_02
 	a               :Version ;
 	dc:issued       "2009-11-12"^^xsd:date ;
 	:revision       "0.02"^^xsd:string ;
-	:file-release   <http://backpan.perl.org/authors/id/T/TO/TOBYINK/RDF-Query-Client-0.02.tar.gz> ;
+	:file-release   <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-Query-Client-0.02.tar.gz> ;
 	dcs:changeset [
 			dcs:versus my:v_0_01 ;
 			dcs:item
@@ -48,7 +48,7 @@ my:v_0_03
 	a               :Version ;
 	dc:issued       "2009-12-07"^^xsd:date ;
 	:revision       "0.03"^^xsd:string ;
-	:file-release   <http://backpan.perl.org/authors/id/T/TO/TOBYINK/RDF-Query-Client-0.03.tar.gz> ;
+	:file-release   <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-Query-Client-0.03.tar.gz> ;
 	dcs:changeset [
 			dcs:versus my:v_0_02 ;
 			dcs:item
@@ -61,7 +61,7 @@ my:v_0_04
 	a               :Version ;
 	dc:issued       "2010-01-27"^^xsd:date ;
 	:revision       "0.04"^^xsd:string ;
-	:file-release   <http://backpan.perl.org/authors/id/T/TO/TOBYINK/RDF-Query-Client-0.04.tar.gz> ;
+	:file-release   <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-Query-Client-0.04.tar.gz> ;
 	dcs:changeset [
 			dcs:versus my:v_0_03 ;
 			dcs:item
