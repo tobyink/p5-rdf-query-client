@@ -2,7 +2,7 @@ NAME
     RDF::Query::Client - Get data from W3C SPARQL Protocol 1.0 servers
 
 VERSION
-    0.04
+    0.05
 
 SYNOPSIS
       use RDF::Query::Client;
@@ -14,48 +14,60 @@ SYNOPSIS
       }
 
 METHODS
-    "new ( $query, \%opts )"
-        Returns a new RDF::Query::Client object for the specified $query.
+    "$query = RDF::Query::Client->new ( $sparql, \%opts )"
+        Returns a new RDF::Query::Client object for the specified $sparql.
         The object's interface is designed to be roughly compatible with
-        RDF::Query objects. The query language is always 'sparql'.
+        RDF::Query objects, though RDF::Query is not required by this
+        module.
+
+        Unlike RDF::Query, where you get a choice of query language, the
+        query language for RDF::Query::Client is always 'sparql'.
+        RDF::TrineShortcuts offers a way to perform RDQL queries on remote
+        SPARQL stores though (by transforming RDQL to SPARQL).
 
         Options include:
 
-            * UserAgent - an LWP::UserAgent to handle HTTP requests.
+        UserAgent - an LWP::UserAgent to handle HTTP requests.
 
-    "execute ( $endpoint, \%opts )"
+    "$query->execute ( $endpoint, \%opts )"
         $endpoint is a URI object or string containing the endpoint URI to
         be queried.
 
         Options include:
 
-            * UserAgent - an LWP::UserAgent to handle HTTP requests.
-            * QueryMethod - 'GET', 'POST' or undef (automatic).
-            * QueryParameter - defaults to 'query'.
-            * AuthUsername - HTTP Basic authorization.
-            * AuthPassword - HTTP Basic authorization.
-            * Headers - additional headers to include (hashref).
-            * Parameters - additional GET/POST fields to include (hashref).
+        *   UserAgent - an LWP::UserAgent to handle HTTP requests.
+
+        *   QueryMethod - 'GET', 'POST' or undef (automatic).
+
+        *   QueryParameter - defaults to 'query'.
+
+        *   AuthUsername - HTTP Basic authorization.
+
+        *   AuthPassword - HTTP Basic authorization.
+
+        *   Headers - additional headers to include (hashref).
+
+        *   Parameters - additional GET/POST fields to include (hashref).
 
         Returns undef on error; an RDF::Trine::Iterator if called in a
         scalar context; an array obtained by calling "get_all" on the
         iterator if called in list context.
 
-    "get ( $endpoint, \%opts )"
+    "$query->get ( $endpoint, \%opts )"
         Executes the query using the specified endpoint, and returns the
         first matching row as a LIST of values. Takes the same arguments as
         "execute()".
 
-    "as_sparql ()"
+    "$query->as_sparql"
         Returns the query as a string in the SPARQL syntax.
 
-    "useragent ()"
+    "$query->useragent"
         Returns the LWP::UserAgent object used for retrieving web content.
 
-    "http_response ()"
+    "$query->http_response"
         Returns the last HTTP Response the client experienced.
 
-    "error ()"
+    "$query->error"
         Returns the last error the client experienced.
 
 SECURITY
@@ -77,6 +89,8 @@ SEE ALSO
 
     *   RDF::Query
 
+    *   RDF::TrineShortcuts
+
     *   LWP::UserAgent
 
     *   http://www.w3.org/TR/rdf-sparql-protocol/
@@ -89,7 +103,7 @@ AUTHOR
     Toby Inkster, <tobyink@cpan.org>
 
 COPYRIGHT AND LICENSE
-    Copyright (C) 2009 by Toby Inkster
+    Copyright (C) 2009-2010 by Toby Inkster
 
     This library is free software; you can redistribute it and/or modify it
     under the same terms as Perl itself, either Perl version 5.6.0 or, at

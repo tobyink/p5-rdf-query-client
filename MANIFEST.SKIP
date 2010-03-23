@@ -5,3 +5,4 @@
 \.svn
 ^example.*\.pl$
 ^[^/]+\.(tar\.gz|tar\.bz2|tgz|tbz2|tbz|zip|tar)$
+^MYMETA.yml

@@ -9,7 +9,7 @@ use LWP::UserAgent;
 use RDF::Trine;
 use URI::Escape;
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 =head1 NAME
 
@@ -17,7 +17,7 @@ RDF::Query::Client - Get data from W3C SPARQL Protocol 1.0 servers
 
 =head1 VERSION
 
-0.04
+0.05
 
 =head1 SYNOPSIS
 
@@ -33,15 +33,23 @@ RDF::Query::Client - Get data from W3C SPARQL Protocol 1.0 servers
 
 =over 4
 
-=item C<< new ( $query, \%opts ) >>
+=item C<< $query = RDF::Query::Client->new ( $sparql, \%opts ) >>
 
-Returns a new RDF::Query::Client object for the specified C<$query>.
+Returns a new RDF::Query::Client object for the specified C<$sparql>.
 The object's interface is designed to be roughly compatible with RDF::Query
-objects. The query language is always 'sparql'.
+objects, though RDF::Query is not required by this module.
 
 Options include:
 
-    * UserAgent - an LWP::UserAgent to handle HTTP requests.
+=over 4
+
+=item B<UserAgent> - an LWP::UserAgent to handle HTTP requests.
+
+=back 
+
+Unlike RDF::Query, where you get a choice of query language, the query language
+for RDF::Query::Client is always 'sparql'. RDF::TrineShortcuts offers a way to perform
+RDQL queries on remote SPARQL stores though (by transforming RDQL to SPARQL).
 
 =cut
 
@@ -61,20 +69,30 @@ sub new
 	return $self;
 }
 
-=item C<< execute ( $endpoint, \%opts ) >>
+=item C<< $query->execute ( $endpoint, \%opts ) >>
 
 C<$endpoint> is a URI object or string containing the endpoint
 URI to be queried.
 
 Options include:
 
-    * UserAgent - an LWP::UserAgent to handle HTTP requests.
-    * QueryMethod - 'GET', 'POST' or undef (automatic).
-    * QueryParameter - defaults to 'query'.
-    * AuthUsername - HTTP Basic authorization.
-    * AuthPassword - HTTP Basic authorization.
-    * Headers - additional headers to include (hashref).
-    * Parameters - additional GET/POST fields to include (hashref).
+=over 4
+
+=item * B<UserAgent> - an LWP::UserAgent to handle HTTP requests.
+
+=item * B<QueryMethod> - 'GET', 'POST' or undef (automatic).
+
+=item * B<QueryParameter> - defaults to 'query'.
+
+=item * B<AuthUsername> - HTTP Basic authorization.
+
+=item * B<AuthPassword> - HTTP Basic authorization.
+
+=item * B<Headers> - additional headers to include (hashref).
+
+=item * B<Parameters> - additional GET/POST fields to include (hashref).
+
+=back
 
 Returns undef on error; an RDF::Trine::Iterator if called in a
 scalar context; an array obtained by calling C<get_all> on the
@@ -114,7 +132,7 @@ sub execute
 	}
 }
 
-=item C<< get ( $endpoint, \%opts ) >>
+=item C<< $query->get ( $endpoint, \%opts ) >>
 
 Executes the query using the specified endpoint, and returns the first matching row
 as a LIST of values. Takes the same arguments as C<< execute() >>.
@@ -148,7 +166,7 @@ sub get
 	return undef;
 }
 
-=item C<< as_sparql () >>
+=item C<< $query->as_sparql >>
 
 Returns the query as a string in the SPARQL syntax.
 
@@ -160,7 +178,7 @@ sub as_sparql
 	return $self->{'query'};
 }
 
-=item C<< useragent () >>
+=item C<< $query->useragent >>
 
 Returns the LWP::UserAgent object used for retrieving web content.
 
@@ -172,7 +190,7 @@ sub useragent
 	return $self->{'ua'};
 }
 
-=item C<< http_response () >>
+=item C<< $query->http_response >>
 
 Returns the last HTTP Response the client experienced.
 
@@ -184,7 +202,7 @@ sub http_response
 	return $self->{'results'}->[-1]->{'response'};
 }
 
-=item C<< error () >>
+=item C<< $query->error >>
 
 Returns the last error the client experienced.
 
@@ -350,9 +368,9 @@ sub _create_iterator
 
 =head1 SECURITY
 
-The C<<execute()>> and C<<get()>> methods allow AuthUsername and
+The C<execute> and C<get> methods allow AuthUsername and
 AuthPassword options to be passed to them for HTTP Basic authentication.
-For more complicated Authentication (Digest, OAuth, Windows, etc),
+For more complicated authentication (Digest, OAuth, Windows, etc),
 it is also possible to pass these methods a customised LWP::UserAgent.
 
 If you have the Crypt::SSLeay package installed, requests to HTTPS
@@ -372,6 +390,8 @@ Probably.
 
 =item * L<RDF::Query>
 
+=item * L<RDF::TrineShortcuts>
+
 =item * L<LWP::UserAgent>
 
 =item * http://www.w3.org/TR/rdf-sparql-protocol/
@@ -388,7 +408,7 @@ Toby Inkster, E<lt>tobyink@cpan.orgE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2009 by Toby Inkster
+Copyright (C) 2009-2010 by Toby Inkster
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.6.0 or,

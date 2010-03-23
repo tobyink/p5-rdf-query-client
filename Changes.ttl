@@ -68,6 +68,19 @@ my:v_0_04
 				[ rdfs:label "Use my new build system." ; a dcs:Update ]
 		] .
 
+my:v_0_05
+
+	a               :Version ;
+	dc:issued       "2010-03-20"^^xsd:date ;
+	:revision       "0.05"^^xsd:string ;
+	:file-release   <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-Query-Client-0.05.tar.gz> ;
+	dcs:changeset [
+			dcs:versus my:v_0_04 ;
+			dcs:item
+				[ rdfs:label "Test script now checks HTTP connectivity to sparql.org before using it for tests." ; a dcs:Update ] ,
+				[ rdfs:label "Minor documentation improvements." ]
+		] .
+
 #############################################################
 
 my:project
@@ -86,7 +99,7 @@ my:project
 	:tester         toby:i ;
 	:created        "2009-11-10"^^xsd:date ;
 	:license        <http://dev.perl.org/licenses/> ;
-	:release        my:v_0_01 , my:v_0_02 , my:v_0_03 , my:v_0_04 .
+	:release        my:v_0_01 , my:v_0_02 , my:v_0_03 , my:v_0_04 , my:v_0_05 .
 
 #############################################################
 

@@ -17,7 +17,7 @@
   </rdf:Description>
   <Version rdf:about="http://search.cpan.org/dist/RDF-Query-Client/#v_0_01">
     <dc:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2009-11-10</dc:issued>
-    <file-release rdf:resource="http://backpan.perl.org/authors/id/T/TO/TOBYINK/RDF-Query-Client-0.01.tar.gz"/>
+    <file-release rdf:resource="http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-Query-Client-0.01.tar.gz"/>
     <revision rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.01</revision>
     <rdfs:comment xml:lang="en">Original version</rdfs:comment>
   </Version>
@@ -48,7 +48,7 @@
       </rdf:Description>
     </dcs:changeset>
     <dc:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2009-11-12</dc:issued>
-    <file-release rdf:resource="http://backpan.perl.org/authors/id/T/TO/TOBYINK/RDF-Query-Client-0.02.tar.gz"/>
+    <file-release rdf:resource="http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-Query-Client-0.02.tar.gz"/>
     <revision rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.02</revision>
   </Version>
   <Version rdf:about="http://search.cpan.org/dist/RDF-Query-Client/#v_0_03">
@@ -68,7 +68,7 @@
       </rdf:Description>
     </dcs:changeset>
     <dc:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2009-12-07</dc:issued>
-    <file-release rdf:resource="http://backpan.perl.org/authors/id/T/TO/TOBYINK/RDF-Query-Client-0.03.tar.gz"/>
+    <file-release rdf:resource="http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-Query-Client-0.03.tar.gz"/>
     <revision rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.03</revision>
   </Version>
   <Version rdf:about="http://search.cpan.org/dist/RDF-Query-Client/#v_0_04">
@@ -83,8 +83,28 @@
       </rdf:Description>
     </dcs:changeset>
     <dc:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2010-01-27</dc:issued>
-    <file-release rdf:resource="http://backpan.perl.org/authors/id/T/TO/TOBYINK/RDF-Query-Client-0.04.tar.gz"/>
+    <file-release rdf:resource="http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-Query-Client-0.04.tar.gz"/>
     <revision rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.04</revision>
+  </Version>
+  <Version rdf:about="http://search.cpan.org/dist/RDF-Query-Client/#v_0_05">
+    <dcs:changeset>
+      <rdf:Description>
+        <dcs:item>
+          <dcs:Update>
+            <rdfs:label>Test script now checks HTTP connectivity to sparql.org before using it for tests.</rdfs:label>
+          </dcs:Update>
+        </dcs:item>
+        <dcs:item>
+          <rdf:Description>
+            <rdfs:label>Minor documentation improvements.</rdfs:label>
+          </rdf:Description>
+        </dcs:item>
+        <dcs:versus rdf:resource="http://search.cpan.org/dist/RDF-Query-Client/#v_0_04"/>
+      </rdf:Description>
+    </dcs:changeset>
+    <dc:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2010-03-20</dc:issued>
+    <file-release rdf:resource="http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-Query-Client-0.05.tar.gz"/>
+    <revision rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.05</revision>
   </Version>
   <Project rdf:about="http://search.cpan.org/dist/RDF-Query-Client/#project">
     <bug-database rdf:resource="http://rt.cpan.org/Dist/Display.html?Queue=RDF-Query-Client"/>
@@ -101,6 +121,7 @@
     <release rdf:resource="http://search.cpan.org/dist/RDF-Query-Client/#v_0_02"/>
     <release rdf:resource="http://search.cpan.org/dist/RDF-Query-Client/#v_0_03"/>
     <release rdf:resource="http://search.cpan.org/dist/RDF-Query-Client/#v_0_04"/>
+    <release rdf:resource="http://search.cpan.org/dist/RDF-Query-Client/#v_0_05"/>
     <repository>
       <SVNRepository>
         <browse rdf:resource="http://goddamn.co.uk/viewvc/perlmods/RDF-Query-Client/"/>

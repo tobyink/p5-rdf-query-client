@@ -4,6 +4,7 @@ author:
   - 'Toby Inkster <tobyink@cpan.org>'
 build_requires:
   ExtUtils::MakeMaker: 6.42
+  LWP::Simple: 0
   Test::More: 0.61
 configure_requires:
   ExtUtils::MakeMaker: 6.42
@@ -18,6 +19,8 @@ no_index:
   directory:
     - inc
     - t
+recommends:
+  DBD::SQLite: 0
 requires:
   Carp: 0
   LWP::UserAgent: 0
@@ -29,4 +32,4 @@ resources:
   homepage: http://search.cpan.org/dist/RDF-Query-Client/
   license: http://dev.perl.org/licenses/
   repository: http://goddamn.co.uk/viewvc/perlmods/RDF-Query-Client/
-version: 0.04
+version: 0.05
