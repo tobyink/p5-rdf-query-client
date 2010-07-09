@@ -1,34 +1,36 @@
 NAME
-    RDF::Query::Client - Get data from W3C SPARQL Protocol 1.0 servers
+    RDF::Query::Client - get data from W3C SPARQL Protocol 1.0 servers
 
 VERSION
-    0.05
+    0.103
 
 SYNOPSIS
       use RDF::Query::Client;
   
-      my $query = new RDF::Query::Client ("SELECT * WHERE {?s ?p ?o. ?o ?p ?s.}");
+      my $query = new RDF::Query::Client ("SELECT * { ?s ?p ?o . }");
       my $iterator = $query->execute('http://example.com/sparql');
       while (my $row = $iterator->next) {
         print $row->{'s'}->as_string;
       }
 
-METHODS
+DESCRIPTION
+  Constructor
     "$query = RDF::Query::Client->new ( $sparql, \%opts )"
         Returns a new RDF::Query::Client object for the specified $sparql.
         The object's interface is designed to be roughly compatible with
         RDF::Query objects, though RDF::Query is not required by this
         module.
 
+        Options include:
+
+        UserAgent - an LWP::UserAgent to handle HTTP requests.
+
         Unlike RDF::Query, where you get a choice of query language, the
         query language for RDF::Query::Client is always 'sparql'.
         RDF::TrineShortcuts offers a way to perform RDQL queries on remote
         SPARQL stores though (by transforming RDQL to SPARQL).
 
-        Options include:
-
-        UserAgent - an LWP::UserAgent to handle HTTP requests.
-
+  Public Methods
     "$query->execute ( $endpoint, \%opts )"
         $endpoint is a URI object or string containing the endpoint URI to
         be queried.
@@ -53,6 +55,21 @@ METHODS
         scalar context; an array obtained by calling "get_all" on the
         iterator if called in list context.
 
+    "$query->discover_execute( $resource_uri, \%opts )"
+        Experimental feature. Discovers a SPARQL endpoint relevent to
+        $resource_uri and then calls "$query->execute" against that. Uses an
+        LRDD-like method to discover the endpoint. If you're publishing data
+        and want people to be able to find your SPARQL endpoint
+        automatically, the easiest way is to include an Link header in HTTP
+        responses:
+
+         Link: </my/endpoint>; rel="http://ontologi.es/sparql#endpoint"
+
+        Change the URL in the angled brackets, but not the URL in the rel
+        string.
+
+        This feature requires the HTTP::LRDD package to be installed.
+
     "$query->get ( $endpoint, \%opts )"
         Executes the query using the specified endpoint, and returns the
         first matching row as a LIST of values. Takes the same arguments as
@@ -70,11 +87,11 @@ METHODS
     "$query->error"
         Returns the last error the client experienced.
 
-SECURITY
-    The "<execute()"> and "<get()"> methods allow AuthUsername and
-    AuthPassword options to be passed to them for HTTP Basic authentication.
-    For more complicated Authentication (Digest, OAuth, Windows, etc), it is
-    also possible to pass these methods a customised LWP::UserAgent.
+  Security
+    The "execute" and "get" methods allow AuthUsername and AuthPassword
+    options to be passed to them for HTTP Basic authentication. For more
+    complicated authentication (Digest, OAuth, Windows, etc), it is also
+    possible to pass these methods a customised LWP::UserAgent.
 
     If you have the Crypt::SSLeay package installed, requests to HTTPS
     endpoints should work. It's possible to specify a client X.509

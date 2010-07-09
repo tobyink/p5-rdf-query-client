@@ -4,7 +4,7 @@
 @prefix dcs:     <http://ontologi.es/doap-changeset#> .
 @prefix dc:      <http://purl.org/dc/terms/> .
 @prefix foaf:    <http://xmlns.com/foaf/0.1/> .
-@prefix my:      <http://search.cpan.org/dist/RDF-Query-Client/#> .
+@prefix my:      <http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/> .
 @prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix toby:    <http://tobyinkster.co.uk/#> .
 @prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
@@ -20,7 +20,7 @@
 
 #############################################################
 
-my:v_0_01
+my:v_0-01
 
 	a               :Version ;
 	dc:issued       "2009-11-10"^^xsd:date ;
@@ -28,14 +28,14 @@ my:v_0_01
 	:file-release   <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-Query-Client-0.01.tar.gz> ;
 	rdfs:comment    "Original version"@en .
 
-my:v_0_02
+my:v_0-02
 
 	a               :Version ;
 	dc:issued       "2009-11-12"^^xsd:date ;
 	:revision       "0.02"^^xsd:string ;
 	:file-release   <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-Query-Client-0.02.tar.gz> ;
 	dcs:changeset [
-			dcs:versus my:v_0_01 ;
+			dcs:versus my:v_0-01 ;
 			dcs:item
 				[ rdfs:label "Support for HTTP Basic Auth" ; a dcs:Addition ] ,
 				[ rdfs:label "Add security notes to documentation" ] ,
@@ -43,42 +43,90 @@ my:v_0_02
 				[ rdfs:label "lib/RDF/Query/Client.pm: use 5.006" ]
 		] .
 
-my:v_0_03
+my:v_0-03
 
 	a               :Version ;
 	dc:issued       "2009-12-07"^^xsd:date ;
 	:revision       "0.03"^^xsd:string ;
 	:file-release   <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-Query-Client-0.03.tar.gz> ;
 	dcs:changeset [
-			dcs:versus my:v_0_02 ;
+			dcs:versus my:v_0-02 ;
 			dcs:item
 				[ rdfs:label "Makefile.PL compatibility with earlier Perl versions." ] ,
 				[ rdfs:label "Remove documentation for RDF::Query-compatible stub functions; issue warnings when they're called." ]
 		] .
 
-my:v_0_04
+my:v_0-04
 
 	a               :Version ;
 	dc:issued       "2010-01-27"^^xsd:date ;
 	:revision       "0.04"^^xsd:string ;
 	:file-release   <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-Query-Client-0.04.tar.gz> ;
 	dcs:changeset [
-			dcs:versus my:v_0_03 ;
+			dcs:versus my:v_0-03 ;
 			dcs:item
 				[ rdfs:label "Use my new build system." ; a dcs:Update ]
 		] .
 
-my:v_0_05
+my:v_0-05
 
 	a               :Version ;
 	dc:issued       "2010-03-20"^^xsd:date ;
 	:revision       "0.05"^^xsd:string ;
 	:file-release   <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-Query-Client-0.05.tar.gz> ;
 	dcs:changeset [
-			dcs:versus my:v_0_04 ;
+			dcs:versus my:v_0-04 ;
 			dcs:item
 				[ rdfs:label "Test script now checks HTTP connectivity to sparql.org before using it for tests." ; a dcs:Update ] ,
 				[ rdfs:label "Minor documentation improvements." ]
+		] .
+
+my:v_0-100
+
+	a               :Version ;
+	dc:issued       "2010-06-30"^^xsd:date ;
+	:revision       "0.100"^^xsd:string ;
+	:file-release   <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-Query-Client-0.100.tar.gz> ;
+	dcs:changeset [
+			dcs:versus my:v_0-05 ;
+			dcs:item
+				[ rdfs:label "Automatic endpoint discovery."@en ; a dcs:Addition ]
+		] .
+
+my:v_0-101
+
+	a               :Version ;
+	dc:issued       "2010-07-03"^^xsd:date ;
+	:revision       "0.101"^^xsd:string ;
+	:file-release   <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-Query-Client-0.101.tar.gz> ;
+	dcs:changeset [
+			dcs:versus my:v_0-100 ;
+			dcs:item
+				[ rdfs:label "Possibly this will fix some cpan-tester fails, though I'm not entirely sure."@en ; a dcs:Bugfix ]
+		] .
+
+my:v_0-102
+
+	a               :Version ;
+	dc:issued       "2010-07-07"^^xsd:date ;
+	:revision       "0.102"^^xsd:string ;
+	:file-release   <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-Query-Client-0.102.tar.gz> ;
+	dcs:changeset [
+			dcs:versus my:v_0-101 ;
+			dcs:item
+				[ rdfs:label "Construct HTTP::LRDD object just in time."@en ; a dcs:Bugfix ]
+		] .
+
+my:v_0-103
+
+	a               :Version ;
+	dc:issued       "2010-07-08"^^xsd:date ;
+	:revision       "0.103"^^xsd:string ;
+	:file-release   <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-Query-Client-0.103.tar.gz> ;
+	dcs:changeset [
+			dcs:versus my:v_0-102 ;
+			dcs:item
+				[ rdfs:label "use Scalar::Util qw'blessed'"@en ; a dcs:Bugfix ]
 		] .
 
 #############################################################
@@ -87,7 +135,7 @@ my:project
 
 	a               :Project ;
 	:name           "RDF-Query-Client" ;
-	:shortdesc      "Client for W3C SPARQL Protocol 1.0"@en ;
+	:shortdesc      "get data from W3C SPARQL Protocol 1.0 servers"@en ;
 	:programming-language  "Perl" ;
 	:homepage       <http://search.cpan.org/dist/RDF-Query-Client/> ;
 	:download-page  <http://search.cpan.org/dist/RDF-Query-Client/> ;
@@ -99,7 +147,8 @@ my:project
 	:tester         toby:i ;
 	:created        "2009-11-10"^^xsd:date ;
 	:license        <http://dev.perl.org/licenses/> ;
-	:release        my:v_0_01 , my:v_0_02 , my:v_0_03 , my:v_0_04 , my:v_0_05 .
+	:release        my:v_0-01 , my:v_0-02 , my:v_0-03 , my:v_0-04 , my:v_0-05 ,
+	                my:v_0-100 , my:v_0-101 , my:v_0-102 , my:v_0-103 .
 
 #############################################################
 
@@ -109,6 +158,7 @@ toby:i
 	foaf:name       "Toby Inkster" ;
 	foaf:homepage   <http://tobyinkster.co.uk/> ;
 	foaf:page       <http://search.cpan.org/~tobyink/> ;
-	foaf:mbox       <mailto:tobyink@cpan.org> .
+	foaf:mbox       <mailto:tobyink@cpan.org> ;
+	<http://www.w3.org/2002/07/owl#sameAs> <http://purl.org/NET/cpan-uri/person/tobyink> .
 
 #############################################################
