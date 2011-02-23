@@ -1,5 +1,7 @@
 #!/usr/bin/perl
 
+use strict;
+use warnings;
 use lib 'lib/';
 use feature ":5.10";
 use RDF::Query::Client;
@@ -22,9 +24,12 @@ my $q_ask       = new RDF::Query::Client($sparql_ask);
 my $q_select    = new RDF::Query::Client($sparql_select);
 my $q_construct = new RDF::Query::Client($sparql_construct);
 
-my $r_ask       = $q_ask->execute('http://sparql.org/books');
-my $r_select    = $q_select->execute('http://sparql.org/books');
-my $r_construct = $q_construct->execute('http://sparql.org/books');
+my $r_ask       = $q_ask->execute('http://sparql.org/books')
+	or die $q_ask->error;
+my $r_select    = $q_select->execute('http://sparql.org/books')
+	or die $q_select->error;
+my $r_construct = $q_construct->execute('http://sparql.org/books')
+	or die $q_construct->error;
 
 say "ASK results in a boolean"
 	if $r_ask->is_boolean;
@@ -33,7 +38,7 @@ say "====";
 
 say "SELECT results in bindings"
 	if $r_select->is_bindings;
-while ($row = $r_select->next)
+while (my $row = $r_select->next)
 {
 	foreach my $k (keys %$row)
 	{
@@ -46,7 +51,7 @@ say "====";
 
 say "CONSTRUCT results in a graph"
 	if $r_construct->is_graph;
-while ($row = $r_construct->next)
+while (my $row = $r_construct->next)
 {
 	say $row->as_string;
 }

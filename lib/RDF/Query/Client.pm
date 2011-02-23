@@ -17,10 +17,6 @@ our $LRDD;
 
 RDF::Query::Client - get data from W3C SPARQL Protocol 1.0 servers
 
-=head1 VERSION
-
-0.103
-
 =head1 SYNOPSIS
 
   use RDF::Query::Client;
@@ -303,7 +299,7 @@ sub _prepare_ua
 			'protocols_allowed' => ['http','https'],
 			);
 		$self->{'ua'}->default_header('Accept' =>
-			'application/sparql-results+json;q=1, '.
+			'application/sparql-results+json, '.
 			'application/sparql-results+xml;q=0.9, '.
 			'application/rdf+xml, application/x-turtle, text/turtle');
 	}
@@ -384,39 +380,44 @@ sub _create_iterator
 	my $self     = shift;
 	my $response = shift;
 
-	if ($response->code != 200)
+	unless ($response->is_success)
 	{
-		$self->{'error'} = $response->message;
+		$self->{error} = $response->message;
 		return;
 	}
 	
-	if ($response->content_type eq 'application/sparql-results+xml') {
+	if ($response->content_type eq 'application/sparql-results+xml'
+	or  $response->content_type eq 'application/sparql-results+json')
 	{
-		return RDF::Trine::Iterator->from_string(
-			$response->decoded_content);
+		local $@ = undef;
+		my $iterator = eval
+		{
+			if ($response->content_type eq 'application/sparql-results+json')
+				{ RDF::Trine::Iterator->from_json($response->decoded_content); }
+			else
+				{ RDF::Trine::Iterator->from_string($response->decoded_content); }
+		};
+		return $iterator
+			if $iterator;
+		
+		$self->{error} = $@;
+		return;
 	}
-	elsif ($response->content_type eq 'application/sparql-results+json')
-	{
-		return RDF::Trine::Iterator->from_json(
-			$response->decoded_content);
-	}
-	elsif ($response->content_type =~ /rdf.xml/)
-	{
-		my $model   = RDF::Trine::Model->new( RDF::Trine::Store->temporary_store );
-		my $parser  = RDF::Trine::Parser::RDFXML->new;
-		$parser->parse_into_model( $response->base, $response->decoded_content , $model );
-		return $model->as_stream;
-	}
-	elsif ($response->content_type =~ /(n3|turtle|text.plain)/)
-	{
-		my $model   = RDF::Trine::Model->new( RDF::Trine::Store->temporary_store );
-		my $parser  = RDF::Trine::Parser::Turtle->new;
-		$parser->parse_into_model( $response->base, $response->decoded_content , $model );
-		return $model->as_stream;
-	}		
 	else
 	{
-		$self->{error} = "Return type not understood.";
+		my $model;
+		eval
+		{
+			my $parser = RDF::Trine::Parser->parser_by_media_type($response->content_type);
+			my $tmp    = RDF::Trine::Model->temporary_model;
+			$parser->parse_into_model($response->base, $response->decoded_content, $tmp);
+			$model = $tmp;
+		};
+		
+		return $model->as_stream if defined $model;
+
+		$self->{error} = sprintf("Response of type '%s' could not be parsed.", $response->content_type);
+#		$self->{error} = sprintf("Response of type '%s' could not be parsed:\n%s", scalar $response->content_type, $response->decoded_content);
 		return;
 	}
 }
