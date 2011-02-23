@@ -17,7 +17,7 @@ license             'perl';
 requires            'Carp'           => 0;
 recommends          'DBD::SQLite'    => 0;
 recommends          'HTTP::LRDD'     => '0.101';
-requires            'RDF::Trine'     => '0.111';
+requires            'RDF::Trine'     => '0.133';
 test_requires       'LWP::Simple'    => 0;
 requires            'LWP::UserAgent' => 0;
 requires            'Scalar::Util'   => 0;

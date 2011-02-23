@@ -6,11 +6,11 @@ use warnings;
 
 use Carp;
 use LWP::UserAgent;
-use RDF::Trine;
+use RDF::Trine 0.133;
 use Scalar::Util qw'blessed';
 use URI::Escape;
 
-our $VERSION = '0.103';
+our $VERSION = '0.104';
 our $LRDD;
 
 =head1 NAME
@@ -303,7 +303,8 @@ sub _prepare_ua
 			'protocols_allowed' => ['http','https'],
 			);
 		$self->{'ua'}->default_header('Accept' =>
-			'application/sparql-results+xml, '.
+			'application/sparql-results+json;q=1, '.
+			'application/sparql-results+xml;q=0.9, '.
 			'application/rdf+xml, application/x-turtle, text/turtle');
 	}
 }
@@ -314,7 +315,7 @@ sub _prepare_request
 	my $endpoint = shift;
 	my $opts     = shift;
 	
-	my $method = uc $opts->{QueryMethod};
+	my $method = uc ($opts->{QueryMethod} || '');
 	if ($method !~ /^(get|post)$/i)
 	{
 		$method = (length $self->{'query'} > 600) ? 'POST' : 'GET';
@@ -388,20 +389,25 @@ sub _create_iterator
 		$self->{'error'} = $response->message;
 		return;
 	}
-
-	if ($response->content_type =~ /sparql.results/i)
+	
+	if ($response->content_type eq 'application/sparql-results+xml') {
 	{
 		return RDF::Trine::Iterator->from_string(
 			$response->decoded_content);
 	}
-	elsif ($response->content_type =~ /rdf.xml/i)
+	elsif ($response->content_type eq 'application/sparql-results+json')
+	{
+		return RDF::Trine::Iterator->from_json(
+			$response->decoded_content);
+	}
+	elsif ($response->content_type =~ /rdf.xml/)
 	{
 		my $model   = RDF::Trine::Model->new( RDF::Trine::Store->temporary_store );
 		my $parser  = RDF::Trine::Parser::RDFXML->new;
 		$parser->parse_into_model( $response->base, $response->decoded_content , $model );
 		return $model->as_stream;
 	}
-	elsif ($response->content_type =~ /(n3|turtle|text.plain)/i)
+	elsif ($response->content_type =~ /(n3|turtle|text.plain)/)
 	{
 		my $model   = RDF::Trine::Model->new( RDF::Trine::Store->temporary_store );
 		my $parser  = RDF::Trine::Parser::Turtle->new;
