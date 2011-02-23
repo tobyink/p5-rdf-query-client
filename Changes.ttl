@@ -129,6 +129,20 @@ my:v_0-103
 				[ rdfs:label "use Scalar::Util qw'blessed'"@en ; a dcs:Bugfix ]
 		] .
 
+my:v_0-104
+
+	a               :Version ;
+	dc:issued       "2011-02-23"^^xsd:date ;
+	:revision       "0.104"^^xsd:string ;
+	:file-release   <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-Query-Client-0.104.tar.gz> ;
+	dcs:changeset [
+			dcs:versus my:v_0-103 ;
+			dcs:item
+				[ rdfs:label "Accept (and prefer) JSON results format."@en ] ,
+				[ rdfs:label "Clean up media-type handling."@en ] ,
+				[ rdfs:label "Delegate media-type-to-parser mapping to RDF::Trine."@en ]
+		] .
+
 #############################################################
 
 my:project
@@ -148,7 +162,7 @@ my:project
 	:created        "2009-11-10"^^xsd:date ;
 	:license        <http://dev.perl.org/licenses/> ;
 	:release        my:v_0-01 , my:v_0-02 , my:v_0-03 , my:v_0-04 , my:v_0-05 ,
-	                my:v_0-100 , my:v_0-101 , my:v_0-102 , my:v_0-103 .
+	                my:v_0-100 , my:v_0-101 , my:v_0-102 , my:v_0-103 , my:v_0-104 .
 
 #############################################################
 

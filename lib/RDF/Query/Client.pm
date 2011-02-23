@@ -4,11 +4,13 @@ use 5.006;
 use strict;
 use warnings;
 
-use Carp;
+use Carp qw[carp];
 use LWP::UserAgent;
 use RDF::Trine 0.133;
 use Scalar::Util qw'blessed';
 use URI::Escape;
+
+use namespace::clean;
 
 our $VERSION = '0.104';
 our $LRDD;
@@ -171,7 +173,7 @@ sub discover_execute
 	
 	unless (blessed($LRDD) && $LRDD->isa('HTTP::LRDD'))
 	{
-		carp "Need HTTP::LRDD to use the discover_execute feature.\n"
+		$self->{error} = "Need HTTP::LRDD to use the discover_execute feature."
 			and return;
 	}
 	

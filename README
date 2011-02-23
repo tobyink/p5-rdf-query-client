@@ -1,9 +1,6 @@
 NAME
     RDF::Query::Client - get data from W3C SPARQL Protocol 1.0 servers
 
-VERSION
-    0.104
-
 SYNOPSIS
       use RDF::Query::Client;
   

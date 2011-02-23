@@ -1,4 +1,13 @@
 use lib 'inc';
-use Test::More tests => 1;
+use Test::More;
 use Test::Signature;
-signature_ok();
+
+if (eval 'use Module::Signature 0.66; 1')
+{
+	plan tests => 1;
+	&signature_ok;
+}
+else
+{
+	plan skip_all =>'Need Module::Signature >= 0.66';
+}

@@ -10,6 +10,11 @@ Home page:    <http://search.cpan.org/dist/RDF-Query-Client/>
 Bug tracker:  <http://rt.cpan.org/Dist/Display.html?Queue=RDF-Query-Client>
 Maintainer:   Toby Inkster <mailto:tobyink@cpan.org>
 
+0.104 [2011-02-23]
+ - Accept (and prefer) JSON results format.
+ - Clean up media-type handling.
+ - Delegate media-type-to-parser mapping to RDF::Trine.
+
 0.103 [2010-07-08]
  - (Bugfix) use Scalar::Util qw'blessed'
 
@@ -37,9 +42,9 @@ Maintainer:   Toby Inkster <mailto:tobyink@cpan.org>
    warnings when they're called.
 
 0.02 [2009-11-12]
+ - Add security notes to documentation
  - lib/RDF/Query/Client.pm: use 5.006
  - (Addition) Implement get() method
- - Add security notes to documentation
  - (Addition) Support for HTTP Basic Auth
 
 0.01 [2009-11-10]

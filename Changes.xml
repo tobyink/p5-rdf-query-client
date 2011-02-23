@@ -1,204 +1,216 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rdf:RDF
-   xmlns:dc="http://purl.org/dc/terms/"
-   xmlns:dcs="http://ontologi.es/doap-changeset#"
-   xmlns:foaf="http://xmlns.com/foaf/0.1/"
-   xmlns:my="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-   xmlns:toby="http://tobyinkster.co.uk/#"
-   xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
-   xmlns="http://usefulinc.com/ns/doap#">
-  <rdf:Description rdf:about="file:///home/tai/src/perlmods/RDF-Query-Client/Changes.ttl">
-    <dc:creator rdf:resource="http://tobyinkster.co.uk/#i"/>
-    <dc:description xml:lang="en">Revision history for Perl extension RDF::Query::Client.</dc:description>
-    <dc:subject rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/project"/>
-    <dc:title>Changes</dc:title>
-  </rdf:Description>
-  <Version rdf:about="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/v_0-01">
-    <dc:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2009-11-10</dc:issued>
-    <file-release rdf:resource="http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-Query-Client-0.01.tar.gz"/>
-    <revision rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.01</revision>
-    <rdfs:comment xml:lang="en">Original version</rdfs:comment>
-  </Version>
-  <Version rdf:about="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/v_0-02">
-    <dcs:changeset>
-      <rdf:Description>
-        <dcs:item>
-          <dcs:Addition>
-            <rdfs:label>Support for HTTP Basic Auth</rdfs:label>
-          </dcs:Addition>
-        </dcs:item>
-        <dcs:item>
-          <rdf:Description>
-            <rdfs:label>Add security notes to documentation</rdfs:label>
-          </rdf:Description>
-        </dcs:item>
-        <dcs:item>
-          <dcs:Addition>
-            <rdfs:label>Implement get() method</rdfs:label>
-          </dcs:Addition>
-        </dcs:item>
-        <dcs:item>
-          <rdf:Description>
-            <rdfs:label>lib/RDF/Query/Client.pm: use 5.006</rdfs:label>
-          </rdf:Description>
-        </dcs:item>
-        <dcs:versus rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/v_0-01"/>
-      </rdf:Description>
-    </dcs:changeset>
-    <dc:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2009-11-12</dc:issued>
-    <file-release rdf:resource="http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-Query-Client-0.02.tar.gz"/>
-    <revision rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.02</revision>
-  </Version>
-  <Version rdf:about="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/v_0-03">
-    <dcs:changeset>
-      <rdf:Description>
-        <dcs:item>
-          <rdf:Description>
-            <rdfs:label>Makefile.PL compatibility with earlier Perl versions.</rdfs:label>
-          </rdf:Description>
-        </dcs:item>
-        <dcs:item>
-          <rdf:Description>
-            <rdfs:label>Remove documentation for RDF::Query-compatible stub functions; issue warnings when they're called.</rdfs:label>
-          </rdf:Description>
-        </dcs:item>
-        <dcs:versus rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/v_0-02"/>
-      </rdf:Description>
-    </dcs:changeset>
-    <dc:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2009-12-07</dc:issued>
-    <file-release rdf:resource="http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-Query-Client-0.03.tar.gz"/>
-    <revision rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.03</revision>
-  </Version>
-  <Version rdf:about="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/v_0-04">
-    <dcs:changeset>
-      <rdf:Description>
-        <dcs:item>
-          <dcs:Update>
-            <rdfs:label>Use my new build system.</rdfs:label>
-          </dcs:Update>
-        </dcs:item>
-        <dcs:versus rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/v_0-03"/>
-      </rdf:Description>
-    </dcs:changeset>
-    <dc:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2010-01-27</dc:issued>
-    <file-release rdf:resource="http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-Query-Client-0.04.tar.gz"/>
-    <revision rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.04</revision>
-  </Version>
-  <Version rdf:about="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/v_0-05">
-    <dcs:changeset>
-      <rdf:Description>
-        <dcs:item>
-          <dcs:Update>
-            <rdfs:label>Test script now checks HTTP connectivity to sparql.org before using it for tests.</rdfs:label>
-          </dcs:Update>
-        </dcs:item>
-        <dcs:item>
-          <rdf:Description>
-            <rdfs:label>Minor documentation improvements.</rdfs:label>
-          </rdf:Description>
-        </dcs:item>
-        <dcs:versus rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/v_0-04"/>
-      </rdf:Description>
-    </dcs:changeset>
-    <dc:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2010-03-20</dc:issued>
-    <file-release rdf:resource="http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-Query-Client-0.05.tar.gz"/>
-    <revision rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.05</revision>
-  </Version>
-  <Version rdf:about="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/v_0-100">
-    <dcs:changeset>
-      <rdf:Description>
-        <dcs:item>
-          <dcs:Addition>
-            <rdfs:label xml:lang="en">Automatic endpoint discovery.</rdfs:label>
-          </dcs:Addition>
-        </dcs:item>
-        <dcs:versus rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/v_0-05"/>
-      </rdf:Description>
-    </dcs:changeset>
-    <dc:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2010-06-30</dc:issued>
-    <file-release rdf:resource="http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-Query-Client-0.100.tar.gz"/>
-    <revision rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.100</revision>
-  </Version>
-  <Version rdf:about="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/v_0-101">
-    <dcs:changeset>
-      <rdf:Description>
-        <dcs:item>
-          <dcs:Bugfix>
-            <rdfs:label xml:lang="en">Possibly this will fix some cpan-tester fails, though I'm not entirely sure.</rdfs:label>
-          </dcs:Bugfix>
-        </dcs:item>
-        <dcs:versus rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/v_0-100"/>
-      </rdf:Description>
-    </dcs:changeset>
-    <dc:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2010-07-03</dc:issued>
-    <file-release rdf:resource="http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-Query-Client-0.101.tar.gz"/>
-    <revision rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.101</revision>
-  </Version>
-  <Version rdf:about="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/v_0-102">
-    <dcs:changeset>
-      <rdf:Description>
-        <dcs:item>
-          <dcs:Bugfix>
-            <rdfs:label xml:lang="en">Construct HTTP::LRDD object just in time.</rdfs:label>
-          </dcs:Bugfix>
-        </dcs:item>
-        <dcs:versus rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/v_0-101"/>
-      </rdf:Description>
-    </dcs:changeset>
-    <dc:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2010-07-07</dc:issued>
-    <file-release rdf:resource="http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-Query-Client-0.102.tar.gz"/>
-    <revision rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.102</revision>
-  </Version>
-  <Version rdf:about="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/v_0-103">
-    <dcs:changeset>
-      <rdf:Description>
-        <dcs:item>
-          <dcs:Bugfix>
-            <rdfs:label xml:lang="en">use Scalar::Util qw'blessed'</rdfs:label>
-          </dcs:Bugfix>
-        </dcs:item>
-        <dcs:versus rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/v_0-102"/>
-      </rdf:Description>
-    </dcs:changeset>
-    <dc:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2010-07-08</dc:issued>
-    <file-release rdf:resource="http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-Query-Client-0.103.tar.gz"/>
-    <revision rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.103</revision>
-  </Version>
-  <Project rdf:about="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/project">
-    <bug-database rdf:resource="http://rt.cpan.org/Dist/Display.html?Queue=RDF-Query-Client"/>
-    <created rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2009-11-10</created>
-    <developer rdf:resource="http://tobyinkster.co.uk/#i"/>
-    <documenter rdf:resource="http://tobyinkster.co.uk/#i"/>
-    <download-page rdf:resource="http://search.cpan.org/dist/RDF-Query-Client/"/>
-    <homepage rdf:resource="http://search.cpan.org/dist/RDF-Query-Client/"/>
-    <license rdf:resource="http://dev.perl.org/licenses/"/>
-    <maintainer rdf:resource="http://tobyinkster.co.uk/#i"/>
-    <name>RDF-Query-Client</name>
-    <programming-language>Perl</programming-language>
-    <release rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/v_0-01"/>
-    <release rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/v_0-02"/>
-    <release rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/v_0-03"/>
-    <release rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/v_0-04"/>
-    <release rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/v_0-05"/>
-    <release rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/v_0-100"/>
-    <release rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/v_0-101"/>
-    <release rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/v_0-102"/>
-    <release rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/v_0-103"/>
-    <repository>
-      <SVNRepository>
-        <browse rdf:resource="http://goddamn.co.uk/viewvc/perlmods/RDF-Query-Client/"/>
-      </SVNRepository>
-    </repository>
-    <shortdesc xml:lang="en">get data from W3C SPARQL Protocol 1.0 servers</shortdesc>
-    <tester rdf:resource="http://tobyinkster.co.uk/#i"/>
-  </Project>
-  <foaf:Person rdf:about="http://tobyinkster.co.uk/#i">
-    <ns1:sameAs xmlns:ns1="http://www.w3.org/2002/07/owl#" rdf:resource="http://purl.org/NET/cpan-uri/person/tobyink"/>
-    <foaf:homepage rdf:resource="http://tobyinkster.co.uk/"/>
-    <foaf:mbox rdf:resource="mailto:tobyink@cpan.org"/>
-    <foaf:name>Toby Inkster</foaf:name>
-    <foaf:page rdf:resource="http://search.cpan.org/~tobyink/"/>
-  </foaf:Person>
+<rdf:RDF xmlns:dbug="http://ontologi.es/doap-bugs#" xmlns:dc="http://purl.org/dc/terms/" xmlns:dcs="http://ontologi.es/doap-changeset#" xmlns:doap="http://usefulinc.com/ns/doap#" xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+<rdf:Description rdf:nodeID="r3F4274E83F9B11E0ABEB800B3162BE56r0">
+	<dcs:item rdf:nodeID="r3F4274E83F9B11E0ABEB800B3162BE56r1"/>
+	<dcs:item rdf:nodeID="r3F4274E83F9B11E0ABEB800B3162BE56r2"/>
+	<dcs:item rdf:nodeID="r3F4274E83F9B11E0ABEB800B3162BE56r3"/>
+	<dcs:item rdf:nodeID="r3F4274E83F9B11E0ABEB800B3162BE56r4"/>
+	<dcs:versus rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/v_0-01"/>
+</rdf:Description>
+<rdf:Description rdf:nodeID="r3F4274E83F9B11E0ABEB800B3162BE56r1">
+	<rdf:type rdf:resource="http://ontologi.es/doap-changeset#Addition"/>
+	<rdfs:label>Support for HTTP Basic Auth</rdfs:label>
+</rdf:Description>
+<rdf:Description rdf:nodeID="r3F4274E83F9B11E0ABEB800B3162BE56r10">
+	<dcs:item rdf:nodeID="r3F4274E83F9B11E0ABEB800B3162BE56r11"/>
+	<dcs:item rdf:nodeID="r3F4274E83F9B11E0ABEB800B3162BE56r12"/>
+	<dcs:versus rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/v_0-04"/>
+</rdf:Description>
+<rdf:Description rdf:nodeID="r3F4274E83F9B11E0ABEB800B3162BE56r11">
+	<rdf:type rdf:resource="http://ontologi.es/doap-changeset#Update"/>
+	<rdfs:label>Test script now checks HTTP connectivity to sparql.org before using it for tests.</rdfs:label>
+</rdf:Description>
+<rdf:Description rdf:nodeID="r3F4274E83F9B11E0ABEB800B3162BE56r12">
+	<rdfs:label>Minor documentation improvements.</rdfs:label>
+</rdf:Description>
+<rdf:Description rdf:nodeID="r3F4274E83F9B11E0ABEB800B3162BE56r13">
+	<dcs:item rdf:nodeID="r3F4274E83F9B11E0ABEB800B3162BE56r14"/>
+	<dcs:versus rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/v_0-05"/>
+</rdf:Description>
+<rdf:Description rdf:nodeID="r3F4274E83F9B11E0ABEB800B3162BE56r14">
+	<rdf:type rdf:resource="http://ontologi.es/doap-changeset#Addition"/>
+	<rdfs:label xml:lang="en">Automatic endpoint discovery.</rdfs:label>
+</rdf:Description>
+<rdf:Description rdf:nodeID="r3F4274E83F9B11E0ABEB800B3162BE56r15">
+	<dcs:item rdf:nodeID="r3F4274E83F9B11E0ABEB800B3162BE56r16"/>
+	<dcs:versus rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/v_0-100"/>
+</rdf:Description>
+<rdf:Description rdf:nodeID="r3F4274E83F9B11E0ABEB800B3162BE56r16">
+	<rdf:type rdf:resource="http://ontologi.es/doap-changeset#Bugfix"/>
+	<rdfs:label xml:lang="en">Possibly this will fix some cpan-tester fails, though I'm not entirely sure.</rdfs:label>
+</rdf:Description>
+<rdf:Description rdf:nodeID="r3F4274E83F9B11E0ABEB800B3162BE56r17">
+	<dcs:item rdf:nodeID="r3F4274E83F9B11E0ABEB800B3162BE56r18"/>
+	<dcs:versus rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/v_0-101"/>
+</rdf:Description>
+<rdf:Description rdf:nodeID="r3F4274E83F9B11E0ABEB800B3162BE56r18">
+	<rdf:type rdf:resource="http://ontologi.es/doap-changeset#Bugfix"/>
+	<rdfs:label xml:lang="en">Construct HTTP::LRDD object just in time.</rdfs:label>
+</rdf:Description>
+<rdf:Description rdf:nodeID="r3F4274E83F9B11E0ABEB800B3162BE56r19">
+	<dcs:item rdf:nodeID="r3F4274E83F9B11E0ABEB800B3162BE56r20"/>
+	<dcs:versus rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/v_0-102"/>
+</rdf:Description>
+<rdf:Description rdf:nodeID="r3F4274E83F9B11E0ABEB800B3162BE56r2">
+	<rdfs:label>Add security notes to documentation</rdfs:label>
+</rdf:Description>
+<rdf:Description rdf:nodeID="r3F4274E83F9B11E0ABEB800B3162BE56r20">
+	<rdf:type rdf:resource="http://ontologi.es/doap-changeset#Bugfix"/>
+	<rdfs:label xml:lang="en">use Scalar::Util qw'blessed'</rdfs:label>
+</rdf:Description>
+<rdf:Description rdf:nodeID="r3F4274E83F9B11E0ABEB800B3162BE56r21">
+	<dcs:item rdf:nodeID="r3F4274E83F9B11E0ABEB800B3162BE56r22"/>
+	<dcs:item rdf:nodeID="r3F4274E83F9B11E0ABEB800B3162BE56r23"/>
+	<dcs:item rdf:nodeID="r3F4274E83F9B11E0ABEB800B3162BE56r24"/>
+	<dcs:versus rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/v_0-103"/>
+</rdf:Description>
+<rdf:Description rdf:nodeID="r3F4274E83F9B11E0ABEB800B3162BE56r22">
+	<rdfs:label xml:lang="en">Accept (and prefer) JSON results format.</rdfs:label>
+</rdf:Description>
+<rdf:Description rdf:nodeID="r3F4274E83F9B11E0ABEB800B3162BE56r23">
+	<rdfs:label xml:lang="en">Clean up media-type handling.</rdfs:label>
+</rdf:Description>
+<rdf:Description rdf:nodeID="r3F4274E83F9B11E0ABEB800B3162BE56r24">
+	<rdfs:label xml:lang="en">Delegate media-type-to-parser mapping to RDF::Trine.</rdfs:label>
+</rdf:Description>
+<rdf:Description rdf:nodeID="r3F4274E83F9B11E0ABEB800B3162BE56r25">
+	<doap:browse rdf:resource="http://goddamn.co.uk/viewvc/perlmods/RDF-Query-Client/"/>
+	<rdf:type rdf:resource="http://usefulinc.com/ns/doap#SVNRepository"/>
+</rdf:Description>
+<rdf:Description rdf:nodeID="r3F4274E83F9B11E0ABEB800B3162BE56r3">
+	<rdf:type rdf:resource="http://ontologi.es/doap-changeset#Addition"/>
+	<rdfs:label>Implement get() method</rdfs:label>
+</rdf:Description>
+<rdf:Description rdf:nodeID="r3F4274E83F9B11E0ABEB800B3162BE56r4">
+	<rdfs:label>lib/RDF/Query/Client.pm: use 5.006</rdfs:label>
+</rdf:Description>
+<rdf:Description rdf:nodeID="r3F4274E83F9B11E0ABEB800B3162BE56r5">
+	<dcs:item rdf:nodeID="r3F4274E83F9B11E0ABEB800B3162BE56r6"/>
+	<dcs:item rdf:nodeID="r3F4274E83F9B11E0ABEB800B3162BE56r7"/>
+	<dcs:versus rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/v_0-02"/>
+</rdf:Description>
+<rdf:Description rdf:nodeID="r3F4274E83F9B11E0ABEB800B3162BE56r6">
+	<rdfs:label>Makefile.PL compatibility with earlier Perl versions.</rdfs:label>
+</rdf:Description>
+<rdf:Description rdf:nodeID="r3F4274E83F9B11E0ABEB800B3162BE56r7">
+	<rdfs:label>Remove documentation for RDF::Query-compatible stub functions; issue warnings when they're called.</rdfs:label>
+</rdf:Description>
+<rdf:Description rdf:nodeID="r3F4274E83F9B11E0ABEB800B3162BE56r8">
+	<dcs:item rdf:nodeID="r3F4274E83F9B11E0ABEB800B3162BE56r9"/>
+	<dcs:versus rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/v_0-03"/>
+</rdf:Description>
+<rdf:Description rdf:nodeID="r3F4274E83F9B11E0ABEB800B3162BE56r9">
+	<rdf:type rdf:resource="http://ontologi.es/doap-changeset#Update"/>
+	<rdfs:label>Use my new build system.</rdfs:label>
+</rdf:Description>
+<rdf:Description rdf:about="file:///home/tai/src/perlmods/RDF-Query-Client/Changes.ttl">
+	<dc:creator rdf:resource="http://tobyinkster.co.uk/#i"/>
+	<dc:description xml:lang="en">Revision history for Perl extension RDF::Query::Client.</dc:description>
+	<dc:subject rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/project"/>
+	<dc:title>Changes</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/project">
+	<doap:bug-database rdf:resource="http://rt.cpan.org/Dist/Display.html?Queue=RDF-Query-Client"/>
+	<doap:created rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2009-11-10</doap:created>
+	<doap:developer rdf:resource="http://tobyinkster.co.uk/#i"/>
+	<doap:documenter rdf:resource="http://tobyinkster.co.uk/#i"/>
+	<doap:download-page rdf:resource="http://search.cpan.org/dist/RDF-Query-Client/"/>
+	<doap:homepage rdf:resource="http://search.cpan.org/dist/RDF-Query-Client/"/>
+	<doap:license rdf:resource="http://dev.perl.org/licenses/"/>
+	<doap:maintainer rdf:resource="http://tobyinkster.co.uk/#i"/>
+	<doap:name>RDF-Query-Client</doap:name>
+	<doap:programming-language>Perl</doap:programming-language>
+	<doap:release rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/v_0-01"/>
+	<doap:release rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/v_0-02"/>
+	<doap:release rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/v_0-03"/>
+	<doap:release rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/v_0-04"/>
+	<doap:release rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/v_0-05"/>
+	<doap:release rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/v_0-100"/>
+	<doap:release rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/v_0-101"/>
+	<doap:release rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/v_0-102"/>
+	<doap:release rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/v_0-103"/>
+	<doap:release rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/v_0-104"/>
+	<doap:repository rdf:nodeID="r3F4274E83F9B11E0ABEB800B3162BE56r25"/>
+	<doap:shortdesc xml:lang="en">get data from W3C SPARQL Protocol 1.0 servers</doap:shortdesc>
+	<doap:tester rdf:resource="http://tobyinkster.co.uk/#i"/>
+	<rdf:type rdf:resource="http://usefulinc.com/ns/doap#Project"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/v_0-01">
+	<dc:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2009-11-10</dc:issued>
+	<doap:file-release rdf:resource="http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-Query-Client-0.01.tar.gz"/>
+	<doap:revision rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.01</doap:revision>
+	<rdf:type rdf:resource="http://usefulinc.com/ns/doap#Version"/>
+	<rdfs:comment xml:lang="en">Original version</rdfs:comment>
+</rdf:Description>
+<rdf:Description rdf:about="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/v_0-02">
+	<dcs:changeset rdf:nodeID="r3F4274E83F9B11E0ABEB800B3162BE56r0"/>
+	<dc:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2009-11-12</dc:issued>
+	<doap:file-release rdf:resource="http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-Query-Client-0.02.tar.gz"/>
+	<doap:revision rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.02</doap:revision>
+	<rdf:type rdf:resource="http://usefulinc.com/ns/doap#Version"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/v_0-03">
+	<dcs:changeset rdf:nodeID="r3F4274E83F9B11E0ABEB800B3162BE56r5"/>
+	<dc:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2009-12-07</dc:issued>
+	<doap:file-release rdf:resource="http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-Query-Client-0.03.tar.gz"/>
+	<doap:revision rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.03</doap:revision>
+	<rdf:type rdf:resource="http://usefulinc.com/ns/doap#Version"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/v_0-04">
+	<dcs:changeset rdf:nodeID="r3F4274E83F9B11E0ABEB800B3162BE56r8"/>
+	<dc:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2010-01-27</dc:issued>
+	<doap:file-release rdf:resource="http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-Query-Client-0.04.tar.gz"/>
+	<doap:revision rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.04</doap:revision>
+	<rdf:type rdf:resource="http://usefulinc.com/ns/doap#Version"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/v_0-05">
+	<dcs:changeset rdf:nodeID="r3F4274E83F9B11E0ABEB800B3162BE56r10"/>
+	<dc:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2010-03-20</dc:issued>
+	<doap:file-release rdf:resource="http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-Query-Client-0.05.tar.gz"/>
+	<doap:revision rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.05</doap:revision>
+	<rdf:type rdf:resource="http://usefulinc.com/ns/doap#Version"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/v_0-100">
+	<dcs:changeset rdf:nodeID="r3F4274E83F9B11E0ABEB800B3162BE56r13"/>
+	<dc:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2010-06-30</dc:issued>
+	<doap:file-release rdf:resource="http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-Query-Client-0.100.tar.gz"/>
+	<doap:revision rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.100</doap:revision>
+	<rdf:type rdf:resource="http://usefulinc.com/ns/doap#Version"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/v_0-101">
+	<dcs:changeset rdf:nodeID="r3F4274E83F9B11E0ABEB800B3162BE56r15"/>
+	<dc:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2010-07-03</dc:issued>
+	<doap:file-release rdf:resource="http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-Query-Client-0.101.tar.gz"/>
+	<doap:revision rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.101</doap:revision>
+	<rdf:type rdf:resource="http://usefulinc.com/ns/doap#Version"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/v_0-102">
+	<dcs:changeset rdf:nodeID="r3F4274E83F9B11E0ABEB800B3162BE56r17"/>
+	<dc:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2010-07-07</dc:issued>
+	<doap:file-release rdf:resource="http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-Query-Client-0.102.tar.gz"/>
+	<doap:revision rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.102</doap:revision>
+	<rdf:type rdf:resource="http://usefulinc.com/ns/doap#Version"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/v_0-103">
+	<dcs:changeset rdf:nodeID="r3F4274E83F9B11E0ABEB800B3162BE56r19"/>
+	<dc:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2010-07-08</dc:issued>
+	<doap:file-release rdf:resource="http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-Query-Client-0.103.tar.gz"/>
+	<doap:revision rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.103</doap:revision>
+	<rdf:type rdf:resource="http://usefulinc.com/ns/doap#Version"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/v_0-104">
+	<dcs:changeset rdf:nodeID="r3F4274E83F9B11E0ABEB800B3162BE56r21"/>
+	<dc:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2011-02-23</dc:issued>
+	<doap:file-release rdf:resource="http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-Query-Client-0.104.tar.gz"/>
+	<doap:revision rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.104</doap:revision>
+	<rdf:type rdf:resource="http://usefulinc.com/ns/doap#Version"/>
+</rdf:Description>
+<rdf:Description xmlns:ns1="http://www.w3.org/2002/07/owl#" rdf:about="http://tobyinkster.co.uk/#i">
+	<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
+	<ns1:sameAs rdf:resource="http://purl.org/NET/cpan-uri/person/tobyink"/>
+	<foaf:homepage rdf:resource="http://tobyinkster.co.uk/"/>
+	<foaf:mbox rdf:resource="mailto:tobyink@cpan.org"/>
+	<foaf:name>Toby Inkster</foaf:name>
+	<foaf:page rdf:resource="http://search.cpan.org/~tobyink/"/>
+</rdf:Description>
 </rdf:RDF>
