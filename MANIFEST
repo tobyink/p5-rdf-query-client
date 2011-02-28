@@ -1,3 +1,4 @@
+TODO
 Changes
 Changes.ttl
 Changes.xml
@@ -10,7 +11,6 @@ SIGNATURE
 
 lib/RDF/Query/Client.pm
 
-t/00sig.t
 t/01basic.t
 
 inc/Module/AutoInstall.pm
