@@ -143,6 +143,18 @@ my:v_0-104
 				[ rdfs:label "Delegate media-type-to-parser mapping to RDF::Trine."@en ]
 		] .
 
+my:v_0-105
+
+	a               :Version ;
+	dc:issued       "2011-03-04"^^xsd:date ;
+	:revision       "0.105"^^xsd:string ;
+	:file-release   <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-Query-Client-0.105.tar.gz> ;
+	dcs:changeset [
+			dcs:versus my:v_0-104 ;
+			dcs:item
+				[ rdfs:label "Fix annoying warning message."@en ]
+		] .
+
 #############################################################
 
 my:project
@@ -162,7 +174,7 @@ my:project
 	:created        "2009-11-10"^^xsd:date ;
 	:license        <http://dev.perl.org/licenses/> ;
 	:release        my:v_0-01 , my:v_0-02 , my:v_0-03 , my:v_0-04 , my:v_0-05 ,
-	                my:v_0-100 , my:v_0-101 , my:v_0-102 , my:v_0-103 , my:v_0-104 .
+	                my:v_0-100 , my:v_0-101 , my:v_0-102 , my:v_0-103 , my:v_0-104 , my:v_0-105 .
 
 #############################################################
 

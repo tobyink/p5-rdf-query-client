@@ -26,5 +26,4 @@ inc/Module/Install.pm
 inc/Module/Install/ReadmeFromPod.pm
 inc/Module/Install/Win32.pm
 inc/Module/Install/WriteAll.pm
-inc/Test/Signature.pm
 

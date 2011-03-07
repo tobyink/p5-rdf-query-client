@@ -10,6 +10,13 @@ configure_requires:
   ExtUtils::MakeMaker: 6.42
 distribution_type: module
 generated_by: 'Module::Install version 1.00'
+keywords:
+  - SPARQL
+  - RDF
+  - Query
+  - Protocol
+  - HTTP
+  - REST
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -35,4 +42,4 @@ resources:
   homepage: http://search.cpan.org/dist/RDF-Query-Client/
   license: http://dev.perl.org/licenses/
   repository: http://goddamn.co.uk/viewvc/perlmods/RDF-Query-Client/
-version: 0.104
+version: 0.105

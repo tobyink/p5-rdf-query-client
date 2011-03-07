@@ -12,7 +12,7 @@ use URI::Escape;
 
 use namespace::clean;
 
-our $VERSION = '0.104';
+our $VERSION = '0.105';
 our $LRDD;
 
 =head1 NAME
@@ -166,15 +166,15 @@ sub discover_execute
 		eval 'use HTTP::LRDD;';
 		eval
 		{
-			$LRDD = HTTP::LRDD->new(qw'http://ontologi.es/sparql#endpoint http://ontologi.es/sparql#fingerpoint')
+			$LRDD = HTTP::LRDD->new('http://ontologi.es/sparql#endpoint', 'http://ontologi.es/sparql#fingerpoint')
 				if HTTP::LRDD->can('new');
 		};
 	}
 	
 	unless (blessed($LRDD) && $LRDD->isa('HTTP::LRDD'))
 	{
-		$self->{error} = "Need HTTP::LRDD to use the discover_execute feature."
-			and return;
+		$self->{error} = "Need HTTP::LRDD to use the discover_execute feature.";
+		return;
 	}
 	
 	my $endpoint = $LRDD->discover($resource_uri)

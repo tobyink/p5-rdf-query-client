@@ -30,11 +30,12 @@ resources(
 	'repository' => "http://goddamn.co.uk/viewvc/perlmods/$dist/",
 	'bugtracker' => "http://rt.cpan.org/Dist/Display.html?Queue=$dist",
 	);
-	
+
+keywords(qw(SPARQL RDF Query Protocol HTTP REST));
+
 write_doap_changes;
 write_doap_changes_xml;
 
-include 'Test::Signature';
 auto_install;
 WriteAll(
 	'meta' => 1,
