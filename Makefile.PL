@@ -35,6 +35,8 @@ keywords(qw(SPARQL RDF Query Protocol HTTP REST));
 
 write_doap_changes;
 write_doap_changes_xml;
+auto_license;
+auto_manifest;
 
 auto_install;
 WriteAll(
