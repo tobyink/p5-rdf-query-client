@@ -1,135 +1,52 @@
 package RDF::Query::Client;
 
-use 5.006;
+use 5.010;
 use strict;
 use warnings;
 
-use Carp qw[carp];
-use LWP::UserAgent;
-use RDF::Trine 0.133;
-use Scalar::Util qw'blessed';
-use URI::Escape;
+use Carp qw/carp/;
+use LWP::UserAgent qw//;
+use RDF::Trine 0.133 qw//;
+use Scalar::Util 0 qw/blessed/;
+use UNIVERSAL::AUTHORITY 0 qw//;
+use URI::Escape 0 qw/uri_escape/;
+
+BEGIN {
+	$RDF::Query::Client::AUTHORITY = 'cpan:TOBYINK';
+	$RDF::Query::Client::VERSION   = '0.106';
+}
 
 use namespace::clean;
-
-our $VERSION = '0.105';
-our $LRDD;
-
-=head1 NAME
-
-RDF::Query::Client - get data from W3C SPARQL Protocol 1.0 servers
-
-=head1 SYNOPSIS
-
-  use RDF::Query::Client;
-  
-  my $query = new RDF::Query::Client ("SELECT * { ?s ?p ?o . }");
-  my $iterator = $query->execute('http://example.com/sparql');
-  while (my $row = $iterator->next) {
-    print $row->{'s'}->as_string;
-  }
-
-=head1 DESCRIPTION
-
-=head2 Constructor
-
-=over 4
-
-=item C<< $query = RDF::Query::Client->new ( $sparql, \%opts ) >>
-
-Returns a new RDF::Query::Client object for the specified C<$sparql>.
-The object's interface is designed to be roughly compatible with RDF::Query
-objects, though RDF::Query is not required by this module.
-
-Options include:
-
-=over 4
-
-=item B<UserAgent> - an LWP::UserAgent to handle HTTP requests.
-
-=back 
-
-Unlike RDF::Query, where you get a choice of query language, the query language
-for RDF::Query::Client is always 'sparql'. RDF::TrineShortcuts offers a way to perform
-RDQL queries on remote SPARQL stores though (by transforming RDQL to SPARQL).
-
-=back
-
-=cut
+use authority::shared q<http://www.perlrdf.org/>;
 
 sub new
 {
-	my $class = shift;
-	my $query = shift;
-	my $opts  = shift;
+	my ($class, $query, $opts) = @_;
 	
 	my $self = bless {
-		'query'      => $query ,
-		'ua'         => $opts->{UserAgent} ,
-		'results'    => [] ,
-		'error'      => undef ,
-	}, $class;
+		query      => $query ,
+		useragent  => ($opts->{UserAgent} // undef) ,
+		results    => [] ,
+		error      => undef ,
+		}, $class;
 	
 	return $self;
 }
 
-=head2 Public Methods
-
-=over 4
-
-=item C<< $query->execute ( $endpoint, \%opts ) >>
-
-C<$endpoint> is a URI object or string containing the endpoint
-URI to be queried.
-
-Options include:
-
-=over 4
-
-=item * B<UserAgent> - an LWP::UserAgent to handle HTTP requests.
-
-=item * B<QueryMethod> - 'GET', 'POST' or undef (automatic).
-
-=item * B<QueryParameter> - defaults to 'query'.
-
-=item * B<AuthUsername> - HTTP Basic authorization.
-
-=item * B<AuthPassword> - HTTP Basic authorization.
-
-=item * B<Headers> - additional headers to include (hashref).
-
-=item * B<Parameters> - additional GET/POST fields to include (hashref).
-
-=back
-
-Returns undef on error; an RDF::Trine::Iterator if called in a
-scalar context; an array obtained by calling C<get_all> on the
-iterator if called in list context.
-
-=cut
-
 sub execute
 {
-	my $self     = shift;
-	my $endpoint = shift;
-	my $opts     = shift;
+	my ($self, $endpoint, $opts) = @_;
 	
-	my $ua = $opts->{UserAgent};
-	unless (defined $ua)
-	{
-		$self->_prepare_ua;
-		$ua = $self->useragent;
-	}
-	
-	my $request = $self->_prepare_request($endpoint, $opts);
-	
+	my $ua       = $opts->{UserAgent} // $self->useragent;
+	my $request  = $self->_prepare_request($endpoint, $opts);
 	my $response = $ua->request($request);
-	push @{ $self->{'results'} }, { 'response' => $response };
-
+	
+	push @{ $self->{results} }, { response => $response };
+	
 	my $iterator = $self->_create_iterator($response);
 	return unless defined $iterator;
-	$self->{'results'}->[-1]->{'iterator'} = $iterator;
-		
+	$self->{results}[-1]{iterator} = $iterator;
+	
 	if (wantarray)
 	{
 		return $iterator->get_all;
@@ -140,26 +57,11 @@ sub execute
 	}
 }
 
-=item C<< $query->discover_execute( $resource_uri, \%opts ) >>
-
-Experimental feature. Discovers a SPARQL endpoint relevent to $resource_uri
-and then calls C<< $query->execute >> against that. Uses an LRDD-like
-method to discover the endpoint. If you're publishing data and want people
-to be able to find your SPARQL endpoint automatically, the easiest way is to
-include an Link header in HTTP responses:
-
- Link: </my/endpoint>; rel="http://ontologi.es/sparql#endpoint"
-
-Change the URL in the angled brackets, but not the URL in the rel string.
-
-This feature requires the HTTP::LRDD package to be installed.
-
-=cut
-
+our $LRDD;
 sub discover_execute
 {
 	my ($self, $resource_uri, $opts) = @_;
-
+	
 	unless ($LRDD)
 	{
 		no warnings;
@@ -171,7 +73,7 @@ sub discover_execute
 		};
 	}
 	
-	unless (blessed($LRDD) && $LRDD->isa('HTTP::LRDD'))
+	unless (blessed($LRDD) and $LRDD->isa('HTTP::LRDD'))
 	{
 		$self->{error} = "Need HTTP::LRDD to use the discover_execute feature.";
 		return;
@@ -183,16 +85,9 @@ sub discover_execute
 	return $self->execute($endpoint, $opts);
 }
 
-=item C<< $query->get ( $endpoint, \%opts ) >>
-
-Executes the query using the specified endpoint, and returns the first matching row
-as a LIST of values. Takes the same arguments as C<< execute() >>.
-
-=cut
-
 sub get
 {
-	my $stream = execute( @_ );
+	my $stream = execute(@_);
 	
 	if (ref $stream)
 	{
@@ -217,109 +112,82 @@ sub get
 	return;
 }
 
-=item C<< $query->as_sparql >>
-
-Returns the query as a string in the SPARQL syntax.
-
-=cut
-
 sub as_sparql
 {
-	my $self = shift;
-	return $self->{'query'};
+	return (shift)->{query};
 }
-
-=item C<< $query->useragent >>
-
-Returns the LWP::UserAgent object used for retrieving web content.
-
-=cut
-
-sub useragent
-{
-	my $self = shift;
-	return $self->{'ua'};
-}
-
-=item C<< $query->http_response >>
-
-Returns the last HTTP Response the client experienced.
-
-=cut
 
 sub http_response
 {
-	my $self = shift;
-	return $self->{'results'}->[-1]->{'response'};
+	return (shift)->{results}[-1]{response};
 }
-
-=item C<< $query->error >>
-
-Returns the last error the client experienced.
-
-=cut
 
 sub error
 {
-	my $self = shift;
-	return $self->{'error'};
+	return (shift)->{error};
 }
 
-sub prepare { carp "Method not implemented\n"; }
-sub execute_plan { carp "Method not implemented\n"; }
-sub execute_with_named_graphs { carp "Method not implemented\n"; }
-sub aggregate { carp "Method not implemented\n"; }
-sub pattern { carp "Method not implemented\n"; }
-sub sse { carp "Method not implemented\n"; }
-sub algebra_fixup { carp "Method not implemented\n"; }
-sub add_function { carp "Method not implemented\n"; }
-sub supported_extensions { carp "Method not implemented\n"; }
-sub supported_functions { carp "Method not implemented\n"; }
-sub add_computed_statement_generator { carp "Method not implemented\n"; }
-sub get_computed_statement_generators { carp "Method not implemented\n"; }
-sub net_filter_function { carp "Method not implemented\n"; }
-sub add_hook_once { carp "Method not implemented\n"; }
-sub add_hook { carp "Method not implemented\n"; }
-sub parsed { carp "Method not implemented\n"; }
-sub bridge { carp "Method not implemented\n"; }
-sub log { carp "Method not implemented\n"; }
-sub logger { carp "Method not implemented\n"; }
-sub costmodel { carp "Method not implemented\n"; }
+sub prepare { carp "Method not implemented"; }
+sub execute_plan { carp "Method not implemented"; }
+sub execute_with_named_graphs { carp "Method not implemented"; }
+sub aggregate { carp "Method not implemented"; }
+sub pattern { carp "Method not implemented"; }
+sub sse { carp "Method not implemented"; }
+sub algebra_fixup { carp "Method not implemented"; }
+sub add_function { carp "Method not implemented"; }
+sub supported_extensions { carp "Method not implemented"; }
+sub supported_functions { carp "Method not implemented"; }
+sub add_computed_statement_generator { carp "Method not implemented"; }
+sub get_computed_statement_generators { carp "Method not implemented"; }
+sub net_filter_function { carp "Method not implemented"; }
+sub add_hook_once { carp "Method not implemented"; }
+sub add_hook { carp "Method not implemented"; }
+sub parsed { carp "Method not implemented"; }
+sub bridge { carp "Method not implemented"; }
+sub log { carp "Method not implemented"; }
+sub logger { carp "Method not implemented"; }
+sub costmodel { carp "Method not implemented"; }
 
-sub _prepare_ua
+sub useragent
 {
-	my $self = shift;
+	my ($self) = @_;
 	
-	unless (defined $self->useragent)
+	unless (defined $self->{useragent})
 	{
-		$self->{'ua'} = LWP::UserAgent->new(
-			'agent'        => 'RDF::Query::Client/'
-			               .   $RDF::Query::Client::VERSION
-								.   ' ' ,
-			'max_redirect' => 2 ,
-			'parse_head'   => 0 ,
-			'protocols_allowed' => ['http','https'],
+		my $accept = join q{, },
+			'application/sparql-results+json',
+			'application/sparql-results+xml;q=0.9',
+			'application/rdf+xml',
+			'application/x-turtle',
+			'text/turtle';
+		my $agent  = sprintf('%s/%s (%s) ',
+			__PACKAGE__,
+			__PACKAGE__->VERSION,
+			__PACKAGE__->AUTHORITY,
 			);
-		$self->{'ua'}->default_header('Accept' =>
-			'application/sparql-results+json, '.
-			'application/sparql-results+xml;q=0.9, '.
-			'application/rdf+xml, application/x-turtle, text/turtle');
+		$self->{useragent} = LWP::UserAgent->new(
+			agent             => $agent,
+			max_redirect      => 2,
+			parse_head        => 0,
+			protocols_allowed => [qw/http https/],
+			);
+		$self->{useragent}->default_header(Accept => $accept);
 	}
+	
+	$self->{useragent};
 }
 
 sub _prepare_request
 {
-	my $self     = shift;
-	my $endpoint = shift;
-	my $opts     = shift;
+	my ($self, $endpoint, $opts) = @_;
 	
-	my $method = uc ($opts->{QueryMethod} || '');
-	if ($method !~ /^(get|post)$/i)
+	my $method = uc ($opts->{QueryMethod} // '');
+	if ($method !~ /^(get|post|patch)$/i)
 	{
-		$method = (length $self->{'query'} > 600) ? 'POST' : 'GET';
+		$method = (length $self->{'query'} > 511) ? 'POST' : 'GET';
 	}
 	
-	my $param = $opts->{QueryParameter} || 'query';
+	my $param = $opts->{QueryParameter} // 'query';
 	
 	my $uri = '';
 	my $cnt = '';
@@ -329,7 +197,7 @@ sub _prepare_request
 		$uri .= sprintf(
 			"%s=%s",
 			uri_escape($param),
-			uri_escape($self->{'query'})
+			uri_escape($self->{query})
 			);
 		if ($opts->{Parameters})
 		{
@@ -349,7 +217,7 @@ sub _prepare_request
 		$cnt  = sprintf(
 			"%s=%s",
 			uri_escape($param),
-			uri_escape($self->{'query'})
+			uri_escape($self->{query})
 			);
 		if ($opts->{Parameters})
 		{
@@ -358,20 +226,36 @@ sub _prepare_request
 				$cnt .= sprintf(
 					"&%s=%s",
 					uri_escape($field),
-					uri_escape($opts->{Parameters}->{$field}),
+					uri_escape($opts->{Parameters}{$field}),
 					);
 			}
 		}
 	}
 	
-	my $req = HTTP::Request->new($method, $uri);
-	$req->content_type('application/x-www-form-urlencoded');
-	$req->content($cnt);
+	my $req = HTTP::Request->new($method => $uri);
+	
+	my $type = $opts->{ContentType} // '';
+	if ($type =~ m{^application/sparql-query}i)
+	{
+		$req->content_type('application/sparql-query');
+		$req->content($self->{query});
+	}
+	elsif ($type =~ m{^application/sparql-update}i)
+	{
+		$req->content_type('application/sparql-update');
+		$req->content($self->{query});
+	}
+	else
+	{
+		$req->content_type('application/x-www-form-urlencoded');
+		$req->content($cnt);
+	}
+	
 	$req->authorization_basic($opts->{AuthUsername}, $opts->{AuthPassword})
 		if defined $opts->{AuthUsername};
 	foreach my $k (keys %{$opts->{Headers}})
 	{
-		$req->header($k => $opts->{Headers}->{$k});
+		$req->header($k => $opts->{Headers}{$k});
 	}
 	
 	return $req;
@@ -379,9 +263,8 @@ sub _prepare_request
 
 sub _create_iterator
 {
-	my $self     = shift;
-	my $response = shift;
-
+	my ($self, $response) = @_;
+	
 	unless ($response->is_success)
 	{
 		$self->{error} = $response->message;
@@ -417,14 +300,130 @@ sub _create_iterator
 		};
 		
 		return $model->as_stream if defined $model;
-
+		
 		$self->{error} = sprintf("Response of type '%s' could not be parsed.", $response->content_type);
-#		$self->{error} = sprintf("Response of type '%s' could not be parsed:\n%s", scalar $response->content_type, $response->decoded_content);
 		return;
 	}
 }
 
 1;
+
+__END__
+
+=head1 NAME
+
+RDF::Query::Client - get data from W3C SPARQL Protocol 1.0 servers
+
+=head1 SYNOPSIS
+
+ use RDF::Query::Client;
+ 
+ my $query = RDF::Query::Client
+               ->new('SELECT DISTINCT ?s WHERE { ?s ?p ?o . }');
+ 
+ my $iterator = $query->execute('http://example.com/sparql');
+ 
+ while (my $row = $iterator->next) {
+    print $row->{s}->as_string;
+ }
+
+=head1 DESCRIPTION
+
+=head2 Constructor
+
+=over 4
+
+=item C<< new ( $sparql, \%opts ) >>
+
+Returns a new RDF::Query::Client object for the specified C<$sparql>.
+The object's interface is designed to be roughly compatible with RDF::Query
+objects, though RDF::Query is not required by this module.
+
+Options include:
+
+=over 4
+
+=item B<UserAgent> - an LWP::UserAgent to handle HTTP requests.
+
+=back 
+
+Unlike RDF::Query, where you get a choice of query language, the query
+language for RDF::Query::Client is always 'sparql'. RDF::TrineShortcuts offers
+a way to perform RDQL queries on remote SPARQL stores though (by transforming
+RDQL to SPARQL).
+
+=back
+
+=head2 Public Methods
+
+=over 4
+
+=item C<< execute ( $endpoint, \%opts ) >>
+
+C<$endpoint> is a URI object or string containing the endpoint
+URI to be queried.
+
+Options include:
+
+=over 4
+
+=item * B<UserAgent> - an LWP::UserAgent to handle HTTP requests.
+
+=item * B<QueryMethod> - 'GET', 'POST', 'PATCH' or undef (automatic).
+
+=item * B<QueryParameter> - defaults to 'query'.
+
+=item * B<AuthUsername> - HTTP Basic authorization.
+
+=item * B<AuthPassword> - HTTP Basic authorization.
+
+=item * B<Headers> - additional headers to include (hashref).
+
+=item * B<Parameters> - additional GET/POST fields to include (hashref).
+
+=item * B<ContentType> - 'application/sparql-query',
+'application/sparql-update' or 'application/x-www-form-urlencoded' (default).
+
+=back
+
+Returns undef on error; an RDF::Trine::Iterator if called in a
+scalar context; an array obtained by calling C<get_all> on the
+iterator if called in list context.
+
+=item C<< discover_execute( $resource_uri, \%opts ) >>
+
+Experimental feature. Discovers a SPARQL endpoint relevent to $resource_uri
+and then calls C<< $query->execute >> against that. Uses an LRDD-like
+method to discover the endpoint. If you're publishing data and want people
+to be able to find your SPARQL endpoint automatically, the easiest way is to
+include an Link header in HTTP responses:
+
+ Link: </my/endpoint>; rel="http://ontologi.es/sparql#endpoint"
+
+Change the URL in the angled brackets, but not the URL in the rel string.
+
+This feature requires the HTTP::LRDD package to be installed.
+
+=item C<< get ( $endpoint, \%opts ) >>
+
+Executes the query using the specified endpoint, and returns the first
+matching row as a LIST of values. Takes the same arguments as C<execute>.
+
+=item C<< as_sparql >>
+
+Returns the query as a string in the SPARQL syntax.
+
+=item C<< useragent >>
+
+Returns the LWP::UserAgent object used for retrieving web content.
+
+=item C<< http_response >>
+
+Returns the last HTTP Response the client experienced.
+
+=item C<< error >>
+
+Returns the last error the client experienced.
 
 =back
 
@@ -437,12 +436,15 @@ it is also possible to pass these methods a customised LWP::UserAgent.
 
 If you have the Crypt::SSLeay package installed, requests to HTTPS
 endpoints should work. It's possible to specify a client X.509
-certificate (e.g. for FOAF+SSL authentication) by setting particular
+certificate (e.g. for WebID authentication) by setting particular
 environment variables. See L<Crypt::SSLeay> documentation for details.
 
 =head1 BUGS
 
 Probably.
+
+Please report any you find here:
+L<https://rt.cpan.org/Dist/Display.html?Queue=RDF-Query-Client>.
 
 =head1 SEE ALSO
 
@@ -451,8 +453,6 @@ Probably.
 =item * L<RDF::Trine>, L<RDF::Trine::Iterator>
 
 =item * L<RDF::Query>
-
-=item * L<RDF::TrineShortcuts>
 
 =item * L<LWP::UserAgent>
 
@@ -470,10 +470,16 @@ Toby Inkster, E<lt>tobyink@cpan.orgE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2009-2010 by Toby Inkster
+Copyright (C) 2009-2011 by Toby Inkster
 
 This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself, either Perl version 5.6.0 or,
-at your option, any later version of Perl 5 you may have available.
+it under the same terms as Perl itself.
+
+=head1 DISCLAIMER OF WARRANTIES
+
+THIS PACKAGE IS PROVIDED "AS IS" AND WITHOUT ANY EXPRESS OR IMPLIED
+WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF
+MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 
 =cut
+
