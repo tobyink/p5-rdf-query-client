@@ -4,8 +4,8 @@ use 5.010;
 use strict;
 use warnings;
 
-use Carp qw/carp/;
-use LWP::UserAgent qw//;
+use Carp 0 qw/carp/;
+use LWP::UserAgent 0 qw//;
 use RDF::Trine 0.133 qw//;
 use Scalar::Util 0 qw/blessed/;
 use UNIVERSAL::AUTHORITY 0 qw//;
