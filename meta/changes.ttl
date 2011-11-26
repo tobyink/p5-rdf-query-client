@@ -146,7 +146,7 @@ my:project :release my:v_0-106 .
 my:v_0-106
 	a               :Version ;
 	dc:issued       "2011-11-26"^^xsd:date ;
-	:revision       "0.105"^^xsd:string ;
+	:revision       "0.106"^^xsd:string ;
 	:file-release   <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-Query-Client-0.106.tar.gz> ;
 	dcs:changeset [
 			dcs:versus my:v_0-105 ;
