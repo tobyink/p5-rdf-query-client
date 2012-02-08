@@ -8,12 +8,11 @@ use Carp 0 qw/carp/;
 use LWP::UserAgent 0 qw//;
 use RDF::Trine 0.133 qw//;
 use Scalar::Util 0 qw/blessed/;
-use UNIVERSAL::AUTHORITY 0 qw//;
 use URI::Escape 0 qw/uri_escape/;
 
 BEGIN {
 	$RDF::Query::Client::AUTHORITY = 'cpan:TOBYINK';
-	$RDF::Query::Client::VERSION   = '0.107';
+	$RDF::Query::Client::VERSION   = '0.109';
 }
 
 use namespace::clean;

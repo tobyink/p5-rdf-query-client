@@ -16,7 +16,6 @@
 		"LWP::UserAgent 0" ,
 		"RDF::Trine 0.133" ,
 		"Scalar::Util 0" ,
-		"UNIVERSAL::AUTHORITY 0" ,
 		"URI::Escape 0" ,
 		"namespace::clean 0.20" ,
 		"authority::shared 0" .

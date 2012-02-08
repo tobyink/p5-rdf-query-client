@@ -167,3 +167,26 @@ my:v_0-107
 			dcs:versus my:v_0-106 ;
 			dcs:item   [ rdfs:label "Update to newer Module::Package::RDF"@en ; a dcs:Packaging, dcs:Bugfix ]
 		] .
+
+my:project :release my:v_0-108 .
+my:v_0-108
+	a               :Version ;
+	dc:issued       "2012-02-08"^^xsd:date ;
+	:revision       "0.108"^^xsd:string ;
+	:file-release   <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-Query-Client-0.108.tar.gz> ;
+	dcs:changeset [
+			dcs:versus my:v_0-107 ;
+			dcs:item   [ rdfs:label "Stop using deprecated UNIVERSAL::AUTHORITY."@en ; a dcs:Update; dcs:blame [ foaf:name "Jonas Smedegaard" ] ]
+		] .
+
+my:project :release my:v_0-109 .
+my:v_0-109
+	a               :Version ;
+	dc:issued       "2012-02-08"^^xsd:date ;
+	:revision       "0.109"^^xsd:string ;
+	:file-release   <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-Query-Client-0.109.tar.gz> ;
+	dcs:changeset [
+			dcs:versus my:v_0-108 ;
+			dcs:item   [ a dcs:Packaging, dcs:Bugfix ]
+		] .
+
