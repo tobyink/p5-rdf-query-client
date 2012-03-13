@@ -1,12 +1,19 @@
-use LWP::Simple qw(get);
+use LWP::UserAgent;
 use Test::More tests => 5;
 
 BEGIN { use_ok('RDF::Query::Client') };
 
 SKIP:
 {
-	skip "need network access and ability to connect to sparql.org", 4
-		unless get("http://sparql.org/");
+	my $response = LWP::UserAgent
+		-> new
+		-> get('http://sparql.org/books/sparql?query=SELECT+*+{$s+$p+$o}');
+	
+	unless ($response->is_success)
+	{
+		diag $response->as_string;		
+		skip "need network access and ability to connect to sparql.org", 4;
+	}
 
 	my $sparql_ask 
 		= "PREFIX dc: <http://purl.org/dc/elements/1.1/>\n"
@@ -25,9 +32,9 @@ SKIP:
 	my $q_select    = new RDF::Query::Client($sparql_select);
 	my $q_construct = new RDF::Query::Client($sparql_construct);
 
-	my $r_ask       = $q_ask->execute('http://sparql.org/books');
-	my $r_select    = $q_select->execute('http://sparql.org/books');
-	my $r_construct = $q_construct->execute('http://sparql.org/books');
+	my $r_ask       = $q_ask->execute('http://sparql.org/books/sparql');
+	my $r_select    = $q_select->execute('http://sparql.org/books/sparql');
+	my $r_construct = $q_construct->execute('http://sparql.org/books/sparql');
 
 	ok($r_ask->is_boolean, "ASK results in a boolean");
 	ok($r_select->is_bindings, "SELECT results in bindings");
