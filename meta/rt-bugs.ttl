@@ -1,0 +1,35 @@
+@prefix dbug: <http://ontologi.es/doap-bugs#> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix doap: <http://usefulinc.com/ns/doap#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix prio: <http://purl.org/NET/cpan-uri/rt/priority/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rt: <http://purl.org/NET/cpan-uri/rt/ticket/> .
+@prefix status: <http://purl.org/NET/cpan-uri/rt/status/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+_:r1331659839r0 a foaf:Agent ;
+	foaf:mbox <mailto:jerven.bolleman@isb-sib.ch> .
+_:r1331659839r1 a foaf:Agent ;
+	foaf:nick "TOBYINK" .
+_:r1331659839r2 a foaf:Agent ;
+	foaf:mbox <mailto:fschlich@zedat.fu-berlin.de> .
+<http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/project> dbug:issue <http://purl.org/NET/cpan-uri/rt/ticket/74592>, <http://purl.org/NET/cpan-uri/rt/ticket/75676> .
+<http://purl.org/NET/cpan-uri/rt/ticket/74592> dbug:assignee _:r1331659839r1 ;
+	dbug:id "74592"^^xsd:string ;
+	dbug:page <https://rt.cpan.org/Ticket/Display.html?id=74592> ;
+	dbug:reporter _:r1331659839r0 ;
+	dbug:status status:rejected ;
+	dc:created "2012-02-01T16:52:08"^^xsd:dateTime ;
+	dc:modified "2012-02-07T09:56:40"^^xsd:dateTime ;
+	a dbug:Issue ;
+	rdfs:label "accepted ContentType does not include sparql-results+xml" .
+<http://purl.org/NET/cpan-uri/rt/ticket/75676> dbug:assignee _:r1331659839r1 ;
+	dbug:id "75676"^^xsd:string ;
+	dbug:page <https://rt.cpan.org/Ticket/Display.html?id=75676> ;
+	dbug:reporter _:r1331659839r2 ;
+	dbug:status status:resolved ;
+	dc:created "2012-03-10T19:30:54"^^xsd:dateTime ;
+	dc:modified "2012-03-13T17:24:24"^^xsd:dateTime ;
+	a dbug:Issue ;
+	rdfs:label "test failure due to change in sparql resource location" .
