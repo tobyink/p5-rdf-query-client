@@ -455,11 +455,11 @@ L<https://rt.cpan.org/Dist/Display.html?Queue=RDF-Query-Client>.
 
 =item * L<LWP::UserAgent>
 
-=item * http://www.w3.org/TR/rdf-sparql-protocol/
+=item * L<http://www.w3.org/TR/rdf-sparql-protocol/>
 
-=item * http://www.w3.org/TR/rdf-sparql-query/
+=item * L<http://www.w3.org/TR/rdf-sparql-query/>
 
-=item * http://www.perlrdf.org/
+=item * L<http://www.perlrdf.org/>
 
 =back
 
@@ -469,7 +469,7 @@ Toby Inkster, E<lt>tobyink@cpan.orgE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2009-2011 by Toby Inkster
+Copyright (C) 2009-2013 by Toby Inkster
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
