@@ -309,6 +309,21 @@ sub _create_iterator
 
 __END__
 
+=pod
+
+=encoding utf8
+
+=begin stopwords
+
+'sparql'
+application/sparql-query
+application/sparql-update
+application/x-www-form-urlencoded
+rel
+WebID
+
+=end stopwords
+
 =head1 NAME
 
 RDF::Query::Client - get data from W3C SPARQL Protocol 1.0 servers
@@ -391,7 +406,7 @@ iterator if called in list context.
 
 =item C<< discover_execute( $resource_uri, \%opts ) >>
 
-Experimental feature. Discovers a SPARQL endpoint relevent to $resource_uri
+Experimental feature. Discovers a SPARQL endpoint relevant to $resource_uri
 and then calls C<< $query->execute >> against that. Uses an LRDD-like
 method to discover the endpoint. If you're publishing data and want people
 to be able to find your SPARQL endpoint automatically, the easiest way is to

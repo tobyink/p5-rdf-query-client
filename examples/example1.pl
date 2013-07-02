@@ -7,7 +7,7 @@ use feature ":5.10";
 use RDF::Query::Client;
 use Data::Dumper;
 
-my $sparql_ask 
+my $sparql_ask
 	= "PREFIX dc: <http://purl.org/dc/elements/1.1/>\n"
 	. "ASK WHERE { ?book dc:title ?title . }" ;
 
