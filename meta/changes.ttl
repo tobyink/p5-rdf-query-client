@@ -212,3 +212,14 @@ my:v_0-111
 			dcs:item   [ a dcs:Packaging, dcs:Bugfix; dcs:fixes <http://purl.org/NET/cpan-uri/rt/ticket/86568> ; rdfs:label "Stop bundling old version of Scalar::Util in 'inc'."@en ]
 		] .
 
+my:project :release my:v_0-112 .
+my:v_0-112
+	a               :Version ;
+	dc:issued       "2013-07-16"^^xsd:date ;
+	:revision       "0.112"^^xsd:string ;
+	:file-release   <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-Query-Client-0.112.tar.gz> ;
+	dcs:changeset [
+			dcs:versus my:v_0-111 ;
+			dcs:item   [ a dcs:Change; rdfs:label "Prefer SPARQL results in XML over JSON. (This partially rolls back a change from 0.104.)"@en ]
+		] .
+
