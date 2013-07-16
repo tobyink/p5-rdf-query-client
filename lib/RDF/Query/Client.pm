@@ -154,8 +154,8 @@ sub useragent
 	unless (defined $self->{useragent})
 	{
 		my $accept = join q{, },
-			'application/sparql-results+json',
-			'application/sparql-results+xml;q=0.9',
+			'application/sparql-results+xml',
+			'application/sparql-results+json;q=0.9',
 			'application/rdf+xml',
 			'application/x-turtle',
 			'text/turtle';
@@ -270,13 +270,12 @@ sub _create_iterator
 		return;
 	}
 	
-	if ($response->content_type eq 'application/sparql-results+xml'
-	or  $response->content_type eq 'application/sparql-results+json')
+	if ($response->content_type =~ /sparql.results/)
 	{
 		local $@ = undef;
 		my $iterator = eval
 		{
-			if ($response->content_type eq 'application/sparql-results+json')
+			if ($response->content_type =~ /json/)
 				{ RDF::Trine::Iterator->from_json($response->decoded_content); }
 			else
 				{ RDF::Trine::Iterator->from_string($response->decoded_content); }
