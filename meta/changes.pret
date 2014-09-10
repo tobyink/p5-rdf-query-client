@@ -223,3 +223,10 @@ my:v_0-112
 			dcs:item   [ a dcs:Change; rdfs:label "Prefer SPARQL results in XML over JSON. (This partially rolls back a change from 0.104.)"@en ]
 		] .
 
+
+`RDF-Query-Client 0.113 cpan:TOBYINK`
+	issued    2014-09-10;
+	changeset [
+		item "Switch to Dist::Inkt."^^Packaging;
+	].
+
