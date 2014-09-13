@@ -1,8 +1,13 @@
-package RDF::Query::Client;
-
 use 5.010;
 use strict;
 use warnings;
+
+package RDF::Query::Client;
+
+BEGIN {
+	$RDF::Query::Client::AUTHORITY = 'cpan:TOBYINK';
+	$RDF::Query::Client::VERSION   = '0.113';
+}
 
 use Carp 0 qw/carp/;
 use LWP::UserAgent 0 qw//;
@@ -10,31 +15,25 @@ use RDF::Trine 0.133 qw//;
 use Scalar::Util 0 qw/blessed/;
 use URI::Escape 0 qw/uri_escape/;
 
-BEGIN {
-	$RDF::Query::Client::AUTHORITY = 'cpan:TOBYINK';
-	$RDF::Query::Client::VERSION   = '0.113';
-}
-
 use namespace::clean;
-use authority::shared q<http://www.perlrdf.org/>;
 
 sub new
 {
-	my ($class, $query, $opts) = @_;
+	my $class = shift;
+	my ($query, $opts) = @_;
 	
-	my $self = bless {
+	bless {
 		query      => $query ,
 		useragent  => ($opts->{UserAgent} // undef) ,
 		results    => [] ,
 		error      => undef ,
-		}, $class;
-	
-	return $self;
+	}, $class;
 }
 
 sub execute
 {
-	my ($self, $endpoint, $opts) = @_;
+	my $self = shift;
+	my ($endpoint, $opts) = @_;
 	
 	my $ua       = $opts->{UserAgent} // $self->useragent;
 	my $request  = $self->_prepare_request($endpoint, $opts);
@@ -46,20 +45,14 @@ sub execute
 	return unless defined $iterator;
 	$self->{results}[-1]{iterator} = $iterator;
 	
-	if (wantarray)
-	{
-		return $iterator->get_all;
-	}
-	else
-	{
-		return $iterator;
-	}
+	wantarray ? $iterator->get_all : $iterator;
 }
 
 our $LRDD;
 sub discover_execute
 {
-	my ($self, $resource_uri, $opts) = @_;
+	my $self = shift;
+	my ($resource_uri, $opts) = @_;
 	
 	unless ($LRDD)
 	{
@@ -86,7 +79,8 @@ sub discover_execute
 
 sub get
 {
-	my $stream = execute(@_);
+	my $self = shift;
+	my $stream = $self->execute(@_);
 	
 	if (ref $stream)
 	{
@@ -149,27 +143,29 @@ sub costmodel { carp "Method not implemented"; }
 
 sub useragent
 {
-	my ($self) = @_;
+	my $self = shift;
 	
 	unless (defined $self->{useragent})
 	{
-		my $accept = join q{, },
+		my $accept = join q{, } => (
 			'application/sparql-results+xml',
 			'application/sparql-results+json;q=0.9',
 			'application/rdf+xml',
 			'application/x-turtle',
-			'text/turtle';
-		my $agent  = sprintf('%s/%s (%s) ',
+			'text/turtle',
+		);
+		my $agent = sprintf(
+			'%s/%s (%s) ',
 			__PACKAGE__,
 			__PACKAGE__->VERSION,
-			__PACKAGE__->AUTHORITY,
-			);
+			do { no strict "refs"; ${ref($self)."::AUTHORITY"} },
+		);
 		$self->{useragent} = LWP::UserAgent->new(
 			agent             => $agent,
 			max_redirect      => 2,
 			parse_head        => 0,
 			protocols_allowed => [qw/http https/],
-			);
+		);
 		$self->{useragent}->default_header(Accept => $accept);
 	}
 	
@@ -178,9 +174,10 @@ sub useragent
 
 sub _prepare_request
 {
-	my ($self, $endpoint, $opts) = @_;
+	my $self = shift;
+	my ($endpoint, $opts) = @_;
 	
-	my $method = uc ($opts->{QueryMethod} // '');
+	my $method = uc($opts->{QueryMethod} // '');
 	if ($method !~ /^(get|post|patch)$/i)
 	{
 		$method = (length $self->{'query'} > 511) ? 'POST' : 'GET';
@@ -197,7 +194,7 @@ sub _prepare_request
 			"%s=%s",
 			uri_escape($param),
 			uri_escape($self->{query})
-			);
+		);
 		if ($opts->{Parameters})
 		{
 			foreach my $field (keys %{$opts->{Parameters}})
@@ -206,7 +203,7 @@ sub _prepare_request
 					"&%s=%s",
 					uri_escape($field),
 					uri_escape($opts->{Parameters}->{$field}),
-					);
+				);
 			}
 		}
 	}
@@ -217,7 +214,7 @@ sub _prepare_request
 			"%s=%s",
 			uri_escape($param),
 			uri_escape($self->{query})
-			);
+		);
 		if ($opts->{Parameters})
 		{
 			foreach my $field (keys %{$opts->{Parameters}})
@@ -226,7 +223,7 @@ sub _prepare_request
 					"&%s=%s",
 					uri_escape($field),
 					uri_escape($opts->{Parameters}{$field}),
-					);
+				);
 			}
 		}
 	}
@@ -252,17 +249,19 @@ sub _prepare_request
 	
 	$req->authorization_basic($opts->{AuthUsername}, $opts->{AuthPassword})
 		if defined $opts->{AuthUsername};
+	
 	foreach my $k (keys %{$opts->{Headers}})
 	{
 		$req->header($k => $opts->{Headers}{$k});
 	}
 	
-	return $req;
+	$req;
 }
 
 sub _create_iterator
 {
-	my ($self, $response) = @_;
+	my $self = shift;
+	my ($response) = @_;
 	
 	unless ($response->is_success)
 	{
