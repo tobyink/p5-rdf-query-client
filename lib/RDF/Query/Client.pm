@@ -6,7 +6,7 @@ package RDF::Query::Client;
 
 BEGIN {
 	$RDF::Query::Client::AUTHORITY = 'cpan:TOBYINK';
-	$RDF::Query::Client::VERSION   = '0.113';
+	$RDF::Query::Client::VERSION   = '0.114';
 }
 
 use Carp 0 qw/carp/;
