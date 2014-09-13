@@ -2,13 +2,11 @@
 
 <http://purl.org/NET/cpan-uri/dist/RDF-Query-Client/project>
 	deps:runtime-recommendation      [ deps:on "HTTP::LRDD"^^deps:CpanId ];
-	deps:runtime-requirement         [ deps:on "Carp 0"^^deps:CpanId ];
-	deps:runtime-requirement         [ deps:on "HTTP::Request 0"^^deps:CpanId ];
-	deps:runtime-requirement         [ deps:on "LWP::UserAgent 0"^^deps:CpanId ];
+	deps:runtime-requirement         [ deps:on "HTTP::Request"^^deps:CpanId ];
+	deps:runtime-requirement         [ deps:on "LWP::UserAgent"^^deps:CpanId ];
 	deps:runtime-requirement         [ deps:on "RDF::Trine 0.133"^^deps:CpanId ];
-	deps:runtime-requirement         [ deps:on "Scalar::Util 0"^^deps:CpanId ];
-	deps:runtime-requirement         [ deps:on "URI::Escape 0"^^deps:CpanId ];
+	deps:runtime-requirement         [ deps:on "URI::Escape"^^deps:CpanId ];
 	deps:runtime-requirement         [ deps:on "namespace::clean 0.20"^^deps:CpanId ];
-	deps:runtime-requirement         [ deps:on "authority::shared 0"^^deps:CpanId ];
+	deps:test-requirement            [ deps:on "Test::RequiresInternet"^^deps:CpanId ];
 	deps:test-requirement            [ deps:on "Test::More 0.61"^^deps:CpanId ].
 

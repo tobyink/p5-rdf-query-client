@@ -1,4 +1,5 @@
 use LWP::UserAgent;
+use Test::RequiresInternet 'sparql.org' => 80;
 use Test::More tests => 5;
 
 BEGIN { use_ok('RDF::Query::Client') };
